@@ -13,7 +13,7 @@
             animation: sticky-cta-rise 0.3s ease;
         }
 
-        @media (width >= 600px) {
+        @media (width >= 768px) {
             display: flex;
             inset-inline: 0 auto;
 
@@ -21,9 +21,10 @@
             clip-path: inset(calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) 0);
         }
 
-        @media (width >= 900px) {
-            inset-inline: calc(var(--space-4) + var(--space-1)) auto;
-            bottom: var(--space-2);
+        /* 1:1 portal: 40px from the left, 20px from the bottom */
+        @media (width >= 1024px) {
+            inset-inline: 40px auto;
+            bottom: 20px;
         }
 
         /* not shown yet: not rendered (hidden attribute until the JS shows the bar) */
@@ -35,16 +36,18 @@
             position: relative;
             z-index: 1;
             display: flex;
-            padding: var(--space-2);
+            padding: var(--space-2) 20px; /* 1:1 portal */
             background-color: var(--background-color);
             pointer-events: auto;
 
-            @media (width >= 600px) {
+            @media (width >= 768px) {
+                padding: var(--space-2) 20px var(--space-2) 18px; /* 1:1 portal: 320px box */
                 box-shadow: var(--shadow-raised);
             }
 
-            @media (width >= 900px) {
-                padding: var(--space-1);
+            /* 1:1 portal: 202px box, 8px × 12px around the 178px toggle */
+            @media (width >= 1024px) {
+                padding: var(--space-1) 12px;
             }
 
             .sticky-cta-toggle {
@@ -53,7 +56,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: var(--space-1);
-                min-height: var(--space-4);
+                min-height: 32px; /* 1:1 portal */
                 border: var(--border-width) solid var(--border-color-strong);
                 padding: 0 var(--space-3);
                 background-color: var(--background-color);
@@ -66,13 +69,13 @@
                 text-transform: var(--heading-text-transform);
                 cursor: pointer;
 
-                @media (width >= 600px) {
+                @media (width >= 768px) {
                     flex: none;
-                    min-width: 284px;
+                    min-width: 282px; /* 1:1 portal */
                     min-height: var(--button-height);
                 }
 
-                @media (width >= 900px) {
+                @media (width >= 1024px) {
                     min-width: 178px;
                 }
 
@@ -99,8 +102,8 @@
             display: flex;
             flex-direction: column-reverse;
             gap: var(--space-1);
-            margin: 0;
-            padding: var(--space-1) var(--space-2);
+            margin: 0 0 -2px; /* 1:1 portal: the tray tucks 2px under the bar */
+            padding: 12px; /* 1:1 portal */
             list-style: none;
             background-color: var(--background-alt);
             pointer-events: auto;
@@ -113,10 +116,11 @@
                 transition: display 0.3s allow-discrete;
             }
 
-            @media (width >= 600px) {
+            @media (width >= 768px) {
                 position: static;
                 flex-direction: row;
                 gap: 0;
+                margin: 0;
                 padding: 0;
                 background-color: transparent;
                 animation-name: sticky-cta-slide-out;
@@ -128,7 +132,7 @@
                 animation-name: sticky-cta-sink;
                 animation-fill-mode: forwards;
 
-                @media (width >= 600px) {
+                @media (width >= 768px) {
                     animation-name: sticky-cta-slide-in;
                 }
             }
@@ -136,9 +140,12 @@
             li {
                 display: flex;
 
-                @media (width >= 600px) {
+                /* 1:1 portal: 190px cells, the 178px CTA centred in each */
+                @media (width >= 768px) {
                     align-items: center;
-                    padding: var(--space-1);
+                    justify-content: center;
+                    width: 190px;
+                    padding: var(--space-1) 0;
                     background-color: var(--background-alt);
                 }
 
@@ -164,7 +171,7 @@
                     /* a card, not a link in running text: the global underline of li links does not apply */
                     text-decoration: none;
 
-                    @media (width >= 600px) {
+                    @media (width >= 768px) {
                         flex: none;
                         width: 178px;
                     }
@@ -172,6 +179,14 @@
                     &:focus-visible {
                         outline: calc(2 * var(--border-width)) solid var(--brand-primary);
                         outline-offset: calc(-2 * var(--border-width));
+                    }
+
+                    /* 1:1 portal: Download Brochure wraps in two left-aligned lines from tablet */
+                    li:last-child > & {
+                        @media (width >= 768px) {
+                            justify-content: flex-start;
+                            text-align: start;
+                        }
                     }
 
                     /* speech bubble of Contact Us: global .icon size (24px), never shrinks */

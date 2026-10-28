@@ -71,7 +71,60 @@ const NUMBERED_VISIBLE = 2;
 const FORM_ANCHOR = '#form';
 
 /** stats: carousel below this width, three columns from it (orchestrator decision). */
-const STATS_GRID_QUERY = '(width >= 900px)';
+const STATS_GRID_QUERY = '(width >= 1024px)';
+
+/**
+ * program: programs the portal flags as «New». POC shortcut (1:1 with the portal): the model
+ * has no field for it, so the badge is painted from the path of the card link.
+ */
+const NEW_PROGRAMS = [
+  '/university/studies/academic-programs/global-bachelor-business-administration/',
+  '/business-school/programs/executive-part-time-mbas/global-mba/',
+  '/business-school/programs/masters/master-in-sports-management-innovation/',
+  '/masters/master-product-management-design-innovation/',
+  '/masters/dual-degrees/programs/dual-degree-international-mba-master-financial-technology/',
+  '/masters/dual-degrees/programs/dual-degree-international-mba-master-in-public-policy/',
+  '/masters/dual-degrees/programs/dual-degree-international-mba-master-in-applied-artificial-intelligence/',
+  '/masters/dual-degrees/programs/dual-degree-master-in-management-master-financial-technology/',
+  '/masters/dual-degrees/programs/dual-degree-master-in-management-master-in-public-policy/',
+  '/masters/dual-degree-international-mba-master-in-technology-and-global-affairs/',
+  '/masters/dual-degree-master-in-management-master-in-technology-and-global-affairs/',
+  '/masters/dual-degrees/programs/dual-degree-master-management-master-in-applied-artificial-intelligence/',
+];
+
+/**
+ * @param {?Element} cell link cell of a program card
+ * @returns {boolean} true when the link points to a program flagged as «New»
+ */
+function isNewProgram(cell) {
+  const href = cell?.querySelector('a[href]')?.getAttribute('href');
+  if (!href) return false;
+  const path = new URL(href, window.location.href).pathname.replace(/\/?$/, '/');
+  return NEW_PROGRAMS.includes(path);
+}
+
+/**
+ * stats: a ² or ³ after the unit is set as the small superscript of the portal.
+ * @param {Element} cell title cell
+ */
+function decorateSuperscripts(cell) {
+  const walker = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) {
+    if (/[²³]/.test(walker.currentNode.textContent)
+      && !walker.currentNode.parentElement.classList.contains('cards-sup')) nodes.push(walker.currentNode);
+  }
+  nodes.forEach((node) => {
+    const parts = node.textContent.split(/([²³])/);
+    node.replaceWith(...parts.filter(Boolean).map((part) => {
+      if (!/[²³]/.test(part)) return document.createTextNode(part);
+      const sup = document.createElement('span');
+      sup.className = 'cards-sup';
+      sup.textContent = part === '²' ? '2' : '3';
+      return sup;
+    }));
+  });
+}
 
 /**
  * Fallback labels, used only when the site placeholders do not define the keys.
@@ -83,6 +136,8 @@ const DEFAULT_LABELS = {
   cardsPrevious: 'Previous programs',
   cardsNext: 'Next programs',
   cardsCategories: 'Program categories',
+  cardsSelect: 'Select an option...',
+  cardsUnlock: 'Unlock program details',
   cardsDuration: 'Duration',
   cardsLanguage: 'Language',
   cardsLocation: 'Location',
@@ -514,6 +569,7 @@ function decorateCard(row, variant, id, labels) {
     fields.title.classList.add('cards-card-title');
     // stats: the figure is a value, not a heading
     if (variant !== 'stats') heading = decorateTitle(fields.title);
+    else decorateSuperscripts(fields.title);
     body.append(fields.title);
   }
 
@@ -539,6 +595,17 @@ function decorateCard(row, variant, id, labels) {
     styleLink(cell, styles[index]);
     actions.append(cell);
   });
+  // program without link2 (authored empty): the portal still shows «Unlock program details»
+  // to the form (POC shortcut, 1:1 with the portal). Generated, so a re-decoration drops it.
+  if (program && !fields.link2) {
+    const unlock = document.createElement('p');
+    const anchor = document.createElement('a');
+    anchor.href = FORM_ANCHOR;
+    anchor.className = 'button secondary';
+    anchor.textContent = labels.cardsUnlock;
+    unlock.append(anchor);
+    actions.append(unlock);
+  }
   if (actions.children.length) details.append(actions);
 
   const reveal = variant === 'overlay' && heading && details.children.length;
@@ -569,6 +636,13 @@ function decorateCard(row, variant, id, labels) {
     row.append(...image, body);
   }
   row.append(...hidden);
+
+  if (program && isNewProgram(fields.link)) {
+    const badge = document.createElement('span');
+    badge.className = 'cards-card-badge';
+    badge.textContent = 'New';
+    row.prepend(badge);
+  }
 }
 
 /**
@@ -723,6 +797,8 @@ function selectTab(panel, tab) {
     item.tabIndex = selected ? 0 : -1;
   });
   panel.setAttribute('aria-labelledby', tab.id);
+  const select = tablist.parentElement.querySelector(':scope > .cards-select');
+  if (select) select.value = tab.dataset.category;
 
   const list = panel.querySelector(':scope > .cards-list');
   list.querySelectorAll(':scope > .cards-card').forEach((card) => {
@@ -735,9 +811,9 @@ function selectTab(panel, tab) {
 /**
  * program: category tabs (WAI-ARIA tablist with automatic activation), only when some card
  * has a category (EV-04, reglas_variante_program). The tabs follow the order in which each
- * category first appears. The first tab is selected on load (a tablist needs a selected tab,
- * WAI-ARIA) and cards without category show in every tab; on mobile the tablist stays, not
- * the select of the portal. Closes the TODO with the orchestrator decision.
+ * category first appears. 1:1 with the portal: no tab is selected on load and every card shows,
+ * in its order; a tab filters when pressed. Cards without category show in every tab. Below
+ * 768px a select (the portal one) replaces the tabs.
  * @param {Element} block the block
  * @param {Element} panel the program panel
  * @param {Object<string, string>} labels labels in use
@@ -787,9 +863,34 @@ function buildTabs(block, panel, labels) {
     selectTab(panel, next);
   });
 
+  // 1:1 portal: below 768px a select replaces the tabs (the CSS shows one or the other)
+  const select = document.createElement('select');
+  select.className = 'cards-select';
+  select.dataset.label = 'cardsCategories';
+  select.setAttribute('aria-label', labels.cardsCategories);
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.disabled = true;
+  placeholder.selected = true;
+  placeholder.textContent = labels.cardsSelect;
+  select.append(placeholder);
+  categories.forEach((category) => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category;
+    select.append(option);
+  });
+  select.addEventListener('change', () => {
+    const tab = [...tablist.children].find((item) => item.dataset.category === select.value);
+    if (tab) selectTab(panel, tab);
+  });
+
   panel.setAttribute('role', 'tabpanel');
-  panel.before(tablist);
-  selectTab(panel, tablist.firstElementChild);
+  panel.before(tablist, select);
+  // 1:1 portal: no tab is selected on load and every card shows, in its order
+  tablist.firstElementChild.tabIndex = 0;
+  [...tablist.children].slice(1).forEach((tab) => { tab.tabIndex = -1; });
+  tablist.querySelectorAll('[role="tab"]').forEach((tab) => tab.setAttribute('aria-selected', 'false'));
 }
 
 /**

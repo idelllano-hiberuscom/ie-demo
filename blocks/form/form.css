@@ -34,25 +34,24 @@
         padding: var(--space-3);
         background-color: var(--background-color);
 
+        /* 1:1 portal: 15/22 heading, 32px + 35px above the first field */
         h2 {
-            margin: 0 var(--space-1) var(--space-8);
+            margin: 0 var(--space-1) var(--space-4);
+            color: #000; /* 1:1 portal */
             font-size: var(--heading-font-size-s);
-            line-height: calc(22 / 15);
-
-            @media (width >= 600px) {
-                margin: var(--space-1) var(--space-2) calc(var(--space-8) + var(--space-3));
-            }
+            line-height: 22px; /* 1:1 portal */
         }
 
+        /* 1:1 portal (Marketo): rows 51px apart, 20px under the button */
         form {
             display: flex;
             flex-direction: column;
-            gap: var(--space-3);
-            padding-bottom: var(--space-3);
+            gap: 25px; /* 1:1 portal */
+            padding: 35px 0 20px; /* 1:1 portal */
         }
 
         .form-field {
-            padding: 0 var(--space-1);
+            padding: 0 10px; /* 1:1 portal */
 
             /* ── input and select ── */
             &.form-field-input input,
@@ -60,13 +59,16 @@
                 display: block;
                 box-sizing: border-box;
                 width: 100%;
+                height: 25px; /* 1:1 portal */
                 border-width: 0 0 var(--border-width);
                 border-style: solid;
-                border-color: var(--border-color);
+                border-color: #c4c4c4; /* 1:1 portal */
+                border-radius: 0;
                 padding: 0 0 0 var(--space-1);
                 background-color: transparent;
-                color: var(--text-color);
-                font-size: var(--body-font-size-s);
+                color: #000; /* 1:1 portal */
+                font-size: 14px; /* 1:1 portal */
+                line-height: 24px; /* 1:1 portal */
 
                 &:focus-visible {
                     outline: 2px solid var(--brand-primary);
@@ -74,38 +76,46 @@
                 }
 
                 &[aria-invalid="true"] {
-                    border-bottom-color: var(--error-color);
+                    border-bottom-color: #bf0000; /* 1:1 portal */
                 }
             }
 
             &.form-field-input input::placeholder {
-                color: var(--text-muted);
+                color: #757575; /* 1:1 portal */
             }
 
             /* ── select: the placeholder option reads like the input placeholders ── */
             &.form-field-select select {
                 &:invalid {
-                    color: var(--text-muted);
+                    color: #757575; /* 1:1 portal */
                 }
 
                 option {
-                    color: var(--text-color);
+                    color: #000; /* 1:1 portal */
                 }
             }
 
             /* ── checkbox ── */
+
+            /* 1:1 portal: 13/18.2 italic consent, #333, links #0066cc */
             &.form-field-checkbox label {
                 display: block;
-                font-size: var(--body-font-size-xs);
-                line-height: 1.4;
+                padding-right: 15px; /* 1:1 portal: narrower consent column */
+                color: #333; /* 1:1 portal */
+                font-size: 13px; /* 1:1 portal */
+                font-style: italic;
+                line-height: 18.2px; /* 1:1 portal */
 
                 input {
-                    margin: 0 var(--space-1) 0 0;
+                    width: 15px; /* 1:1 portal */
+                    height: 15px;
+                    margin: 2px var(--space-1) 0 0; /* 1:1 portal */
+                    vertical-align: top;
                     accent-color: var(--brand-primary);
                 }
 
                 a:any-link {
-                    color: var(--link-color-secondary);
+                    color: #06c; /* 1:1 portal */
                     text-decoration: underline;
                 }
             }
@@ -122,20 +132,23 @@
 
         .form-error {
             margin: var(--space-1) 0 0;
-            color: var(--error-color);
+            color: #bf0000; /* 1:1 portal */
             font-size: var(--body-font-size-xs);
             font-weight: var(--font-weight-bold);
         }
 
+        /* 1:1 portal: full-width 56px button, 11px bold, 40px above it */
         .form-actions {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: var(--space-4);
+            padding-top: 33px; /* 1:1 portal: 15px under the consent + 40px, minus the row gap */
 
             .button {
                 width: 100%;
                 max-width: 400px;
+                min-height: 56px; /* 1:1 portal */
+                font-size: 11px; /* 1:1 portal */
                 font-weight: var(--font-weight-bold);
             }
         }

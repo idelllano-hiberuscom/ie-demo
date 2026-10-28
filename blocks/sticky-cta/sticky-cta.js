@@ -273,6 +273,20 @@ function takeLink(row) {
 }
 
 /**
+ * POC shortcut, 1:1 with the portal: a CTA whose label is authored but whose link is empty
+ * still shows, and opens the form of the page (#form), as the portal opens its Marketo form.
+ * @param {Element} [labelRow]
+ * @returns {HTMLAnchorElement|null}
+ */
+function formLink(labelRow) {
+  if (!labelRow?.textContent.trim() || !document.getElementById('form')) return null;
+  const link = document.createElement('a');
+  link.href = '#form';
+  link.className = 'sticky-cta-link';
+  return link;
+}
+
+/**
  * Tells whether a link points to a PDF.
  * @param {HTMLAnchorElement} link
  * @returns {boolean}
@@ -477,12 +491,12 @@ export default function decorate(block) {
   bar.append(toggle);
 
   // CONTACT US and DOWNLOAD BROCHURE, in the portal order.
-  const contactLink = takeLink(field.contactLink);
+  const contactLink = takeLink(field.contactLink) || formLink(field.contactLabel);
   const contactText = buildText(field.contactLabel, 'stickyCtaContact', fallbacks);
   const contact = buildItem(contactLink, contactText);
   if (contactLink) addContactIcon(contactLink);
 
-  const brochureLink = takeLink(field.brochureDocument);
+  const brochureLink = takeLink(field.brochureDocument) || formLink(field.brochureLabel);
   const brochureName = brochureLink
     ? decorateDownload(brochureLink, field.brochureName)
     : null;
