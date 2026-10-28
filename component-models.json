@@ -466,5 +466,92 @@
         "label": "Texto del enlace secundario"
       }
     ]
+  },
+  {
+    "id": "media-text",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Medio a la izquierda: el medio va primero (también en móvil). Medio a la derecha: el texto va primero. Tarjeta: el medio es una tarjeta lateral con imagen, título, subtítulo y botón. Sin opción, el medio va a la derecha.",
+        "options": [
+          {
+            "name": "Medio a la izquierda",
+            "value": "media-left"
+          },
+          {
+            "name": "Medio a la derecha",
+            "value": "media-right"
+          },
+          {
+            "name": "Tarjeta",
+            "value": "card"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título",
+        "description": "Opcional. Se muestra como h2."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Texto",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Imagen",
+        "description": "Opcional. Con vídeo hace de póster mientras el reproductor carga.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Texto alternativo de la imagen",
+        "description": "Déjalo vacío si la imagen es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Vídeo (URL de YouTube)",
+        "description": "Opcional. Admite URL de YouTube watch, youtu.be, embed o miniatura (img.youtube.com/vi/…). Se reproduce silenciado, con un botón de pausa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mediaTitle",
+        "label": "Título de la tarjeta",
+        "description": "Opcional. Se muestra bajo el medio como h3."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "mediaText",
+        "label": "Subtítulo de la tarjeta"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace de la tarjeta"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Texto del enlace de la tarjeta"
+      }
+    ]
   }
 ]
