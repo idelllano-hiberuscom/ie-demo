@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1208 320" width="1208" height="320">
+<rect width="1208" height="320" fill="#f2f2f2"/>
+<g fill="#c9c9cf">
+<rect x="60" y="80" width="1088" height="210" rx="6"/>
+</g>
+<g fill="#000066" text-anchor="middle" font-family="Georgia, serif" font-style="italic">
+<text x="604" y="32" font-size="22">Extraordinary</text>
+<text x="604" y="50" font-size="14">(nothing less)</text>
+</g>
+<text x="604" y="200" fill="#6d6d78" text-anchor="middle" font-family="Arial, sans-serif" font-size="18">Test image — group photo placeholder</text>
+</svg>
