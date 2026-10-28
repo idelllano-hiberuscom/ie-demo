@@ -17,9 +17,15 @@
       "columns",
       "fragment",
       "accordion",
+      "form",
+      "media-text",
+      "carousel",
       "breadcrumb",
       "form",
-      "tabs"
+      "tabs",
+      "share",
+      "publication-detail",
+      "embed"
     ]
   },
   {
@@ -38,6 +44,12 @@
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carousel-item"
     ]
   },
   {

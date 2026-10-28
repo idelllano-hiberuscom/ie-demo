@@ -305,6 +305,86 @@
     ]
   },
   {
+    "id": "carousel",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Presentación del carrusel. Elige una sola: galería de fotos, logos, tarjetas, testimonios o blog (2 tarjetas enlazadas por vista).",
+        "options": [
+          {
+            "name": "Galería",
+            "value": "gallery"
+          },
+          {
+            "name": "Logos",
+            "value": "logos"
+          },
+          {
+            "name": "Tarjetas",
+            "value": "cards"
+          },
+          {
+            "name": "Testimonios",
+            "value": "testimonial"
+          },
+          {
+            "name": "Blog",
+            "value": "blog"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Imagen",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_imageAlt",
+        "label": "Texto alternativo de la imagen",
+        "description": "Describe la imagen. En logos es el nombre de la empresa. Déjalo vacío solo si la imagen es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título",
+        "description": "Título de la tarjeta o entrada. En testimonios, el nombre de la persona."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Texto",
+        "description": "Descripción de la tarjeta. En testimonios, la cita; en blog, la categoría."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Texto del enlace",
+        "description": "Vacío con título: la diapositiva entera es el enlace y lo nombra su título (variante blog)."
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -320,6 +400,40 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_uri",
+        "label": "URL del vídeo de YouTube",
+        "description": "Enlace de YouTube (watch, youtu.be o embed) o la URL de su miniatura (img.youtube.com/vi/…). El vídeo se abre en una ventana al pulsar el botón de reproducir.",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "embed_placeholder",
+        "label": "Miniatura del vídeo",
+        "description": "Opcional. Imagen 16:9 que se muestra bajo el botón de reproducir.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_placeholderAlt",
+        "label": "Texto alternativo de la miniatura"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Titular",
+        "description": "Opcional. Se superpone a la miniatura y da nombre al botón de reproducir y a la ventana del vídeo."
       }
     ]
   },
@@ -484,6 +598,168 @@
         "valueType": "string",
         "name": "link2Text",
         "label": "Texto del enlace secundario"
+      }
+    ]
+  },
+  {
+    "id": "media-text",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Medio a la izquierda: el medio va primero (también en móvil). Medio a la derecha: el texto va primero. Tarjeta: el medio es una tarjeta lateral con imagen, título, subtítulo y botón. Sin opción, el medio va a la derecha.",
+        "options": [
+          {
+            "name": "Medio a la izquierda",
+            "value": "media-left"
+          },
+          {
+            "name": "Medio a la derecha",
+            "value": "media-right"
+          },
+          {
+            "name": "Tarjeta",
+            "value": "card"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título",
+        "description": "Opcional. Se muestra como h2."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Texto",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Imagen",
+        "description": "Opcional. Con vídeo hace de póster mientras el reproductor carga.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Texto alternativo de la imagen",
+        "description": "Déjalo vacío si la imagen es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Vídeo (URL de YouTube)",
+        "description": "Opcional. Admite URL de YouTube watch, youtu.be, embed o miniatura (img.youtube.com/vi/…). Se reproduce silenciado, con un botón de pausa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mediaHeading",
+        "label": "Título de la tarjeta",
+        "description": "Opcional. Se muestra bajo el medio como h3."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "mediaDescription",
+        "label": "Subtítulo de la tarjeta"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace de la tarjeta"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Texto del enlace de la tarjeta"
+      }
+    ]
+  },
+  {
+    "id": "publication-detail",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Portada",
+        "description": "Opcional. Portada de la publicación.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Texto alternativo de la portada",
+        "description": "Déjalo vacío si la portada es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "authors",
+        "label": "Autores",
+        "description": "El bloque pone encima la etiqueta «Author(s)».",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "document",
+        "label": "Documento PDF",
+        "description": "PDF de la publicación en el DAM. El bloque pinta el enlace de descarga bajo la etiqueta «Publication».",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "documentText",
+        "label": "Texto del enlace al documento",
+        "description": "Título de la publicación. Es el texto y el nombre accesible del enlace; vacío, el enlace dice «Download the publication»."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "abstract",
+        "label": "Resumen"
+      }
+    ]
+  },
+  {
+    "id": "share",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Compacta: barra clara de la cabecera de la noticia o de la publicación. Sin variante: franja oscura tras el cuerpo.",
+        "options": [
+          {
+            "name": "Compacta",
+            "value": "compact"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Etiqueta",
+        "description": "Texto que precede a los enlaces, por ejemplo «Share». Opcional: déjalo vacío para mostrar solo los iconos."
       }
     ]
   },

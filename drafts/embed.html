@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Embed</title>
+<meta name="description" content="Test page for the embed block (EDS-COMP-014): YouTube video opened in a modal from a thumbnail, with and without title.">
+<meta name="nav" content="/drafts/nav">
+<meta name="footer" content="/drafts/footer">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
+  move-to-http-header="true"
+>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem" src="/scripts/aem.js" type="module"></script>
+<script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div>
+  <h1>Embed</h1>
+  <p>Test content for the embed block. Each band opens its YouTube video in a modal; no player is loaded until the play button is used.</p>
+</div>
+<div>
+  <h2>Video band with a YouTube thumbnail</h2>
+  <p>Occurrence -04: the video URL is the YouTube thumbnail itself (rule DH-10). The placeholder image is a local stand-in, so the test page loads nothing from third parties.</p>
+<div class="embed">
+  <div>
+    <div>
+      <p><a href="https://img.youtube.com/vi/ub1WnQ7pivs/maxresdefault.jpg">https://img.youtube.com/vi/ub1WnQ7pivs/maxresdefault.jpg</a></p>
+      <picture><img src="/drafts/media/hero-city.jpg" alt="David Goodman seated in a dark studio" width="1600" height="900"></picture>
+    </div>
+  </div>
+  <div>
+    <div><p>The Next Fifty: Exploring Creativity in the Age of Technology with David Goodman</p></div>
+  </div>
+</div>
+</div>
+<div>
+  <h2>Video band with its own image</h2>
+  <p>Occurrence -06: an image of the site as placeholder and a YouTube watch URL.</p>
+<div class="embed">
+  <div>
+    <div>
+      <p><a href="https://www.youtube.com/watch?v=ub1WnQ7pivs">https://www.youtube.com/watch?v=ub1WnQ7pivs</a></p>
+      <picture><img src="/drafts/media/hero-hall.jpg" alt="" width="1600" height="900"></picture>
+    </div>
+  </div>
+  <div>
+    <div><p>Next 50 - Take-away by the Dean</p></div>
+  </div>
+</div>
+</div>
+<div>
+  <h2>Video band without title</h2>
+  <p>The optional title is empty: the play button and the modal fall back to the generic labels.</p>
+<div class="embed">
+  <div>
+    <div>
+      <p>https://youtu.be/ub1WnQ7pivs</p>
+      <picture><img src="/drafts/media/hero-tower.jpg" alt="" width="1600" height="900"></picture>
+    </div>
+  </div>
+  <div>
+    <div></div>
+  </div>
+</div>
+</div>
+<div>
+  <h2>Nested in a fragment</h2>
+  <div class="fragment">
+    <div>
+      <div><a href="/drafts/embed-fragment">/drafts/embed-fragment</a></div>
+    </div>
+  </div>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>
