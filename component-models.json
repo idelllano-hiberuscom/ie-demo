@@ -266,6 +266,26 @@
     ]
   },
   {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Texto del nivel",
+        "description": "Nombre de la página de este nivel. El último nivel es la página actual.",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace del nivel",
+        "description": "Página a la que lleva el nivel. En el último nivel (la página actual) se ignora: déjalo vacío."
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -281,6 +301,86 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Presentación del carrusel. Elige una sola: galería de fotos, logos, tarjetas, testimonios o blog (2 tarjetas enlazadas por vista).",
+        "options": [
+          {
+            "name": "Galería",
+            "value": "gallery"
+          },
+          {
+            "name": "Logos",
+            "value": "logos"
+          },
+          {
+            "name": "Tarjetas",
+            "value": "cards"
+          },
+          {
+            "name": "Testimonios",
+            "value": "testimonial"
+          },
+          {
+            "name": "Blog",
+            "value": "blog"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Imagen",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_imageAlt",
+        "label": "Texto alternativo de la imagen",
+        "description": "Describe la imagen. En logos es el nombre de la empresa. Déjalo vacío solo si la imagen es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título",
+        "description": "Título de la tarjeta o entrada. En testimonios, el nombre de la persona."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Texto",
+        "description": "Descripción de la tarjeta. En testimonios, la cita; en blog, la categoría."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Texto del enlace",
+        "description": "Vacío con título: la diapositiva entera es el enlace y lo nombra su título (variante blog)."
       }
     ]
   },
@@ -530,14 +630,14 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "mediaTitle",
+        "name": "mediaHeading",
         "label": "Título de la tarjeta",
         "description": "Opcional. Se muestra bajo el medio como h3."
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "mediaText",
+        "name": "mediaDescription",
         "label": "Subtítulo de la tarjeta"
       },
       {
@@ -551,6 +651,31 @@
         "valueType": "string",
         "name": "linkText",
         "label": "Texto del enlace de la tarjeta"
+      }
+    ]
+  },
+  {
+    "id": "share",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Compacta: barra clara de la cabecera de la noticia o de la publicación. Sin variante: franja oscura tras el cuerpo.",
+        "options": [
+          {
+            "name": "Compacta",
+            "value": "compact"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Etiqueta",
+        "description": "Texto que precede a los enlaces, por ejemplo «Share». Opcional: déjalo vacío para mostrar solo los iconos."
       }
     ]
   }

@@ -61,7 +61,10 @@
         "fragment",
         "accordion",
         "form",
-        "media-text"
+        "media-text",
+        "carousel",
+        "breadcrumb",
+        "share"
       ]
     }
   ]

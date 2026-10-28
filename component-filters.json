@@ -18,7 +18,10 @@
       "fragment",
       "accordion",
       "form",
-      "media-text"
+      "media-text",
+      "carousel",
+      "breadcrumb",
+      "share"
     ]
   },
   {
@@ -28,9 +31,21 @@
     ]
   },
   {
+    "id": "breadcrumb",
+    "components": [
+      "breadcrumb-item"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carousel-item"
     ]
   },
   {
