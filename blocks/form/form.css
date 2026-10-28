@@ -1,0 +1,151 @@
+.form-container {
+    @media (width >= 1200px) {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--space-8);
+    }
+
+    > .default-content-wrapper {
+        @media (width >= 1200px) {
+            flex: 0 1 calc(var(--content-max-width) * 2 / 3 - var(--space-8));
+            margin: 0;
+            padding-right: 0;
+        }
+    }
+
+    > .form-wrapper {
+        .default-content-wrapper + & {
+            padding-top: var(--space-8);
+
+            @media (width >= 1200px) {
+                padding-top: 0;
+            }
+        }
+
+        @media (width >= 1200px) {
+            flex: 0 1 calc(var(--content-max-width) / 3);
+            margin: 0;
+            padding-left: 0;
+        }
+    }
+
+    .form {
+        padding: var(--space-3);
+        background-color: var(--background-color);
+
+        h2 {
+            margin: 0 var(--space-1) var(--space-8);
+            font-size: var(--heading-font-size-s);
+            line-height: calc(22 / 15);
+
+            @media (width >= 600px) {
+                margin: var(--space-1) var(--space-2) calc(var(--space-8) + var(--space-3));
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+            padding-bottom: var(--space-3);
+        }
+
+        .form-field {
+            padding: 0 var(--space-1);
+
+            /* ── input and select ── */
+            &.form-field-input input,
+            &.form-field-select select {
+                display: block;
+                box-sizing: border-box;
+                width: 100%;
+                border-width: 0 0 var(--border-width);
+                border-style: solid;
+                border-color: var(--border-color);
+                padding: 0 0 0 var(--space-1);
+                background-color: transparent;
+                color: var(--text-color);
+                font-size: var(--body-font-size-s);
+
+                &:focus-visible {
+                    outline: 2px solid var(--brand-primary);
+                    outline-offset: 2px;
+                }
+
+                &[aria-invalid="true"] {
+                    border-bottom-color: var(--border-color-strong);
+                }
+            }
+
+            &.form-field-input input::placeholder {
+                color: var(--text-muted);
+            }
+
+            /* ── select: the placeholder option reads like the input placeholders ── */
+            &.form-field-select select {
+                &:invalid {
+                    color: var(--text-muted);
+                }
+
+                option {
+                    color: var(--text-color);
+                }
+            }
+
+            /* ── checkbox ── */
+            &.form-field-checkbox label {
+                display: block;
+                font-size: var(--body-font-size-xs);
+                line-height: 1.4;
+
+                input {
+                    margin: 0 var(--space-1) 0 0;
+                    accent-color: var(--brand-primary);
+                }
+
+                a:any-link {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .form-label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        .form-error {
+            margin: var(--space-1) 0 0;
+            font-size: var(--body-font-size-xs);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: var(--space-4);
+
+            .button {
+                width: 100%;
+                max-width: 400px;
+                font-weight: var(--font-weight-bold);
+            }
+        }
+
+        .form-status {
+            margin: 0;
+            font-size: var(--body-font-size-s);
+            text-align: center;
+
+            &:not(:empty) {
+                margin-top: var(--space-2);
+            }
+        }
+    }
+}

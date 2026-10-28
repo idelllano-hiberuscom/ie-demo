@@ -60,7 +60,9 @@
         "columns",
         "fragment",
         "accordion",
-        "carousel"
+        "carousel",
+        "breadcrumb",
+        "form"
       ]
     }
   ]
