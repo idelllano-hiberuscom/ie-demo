@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Form in a fragment</title>
+<meta name="description" content="Test page for the form block nested in a fragment: the section is not a direct child of main and must keep its layout.">
+<meta name="nav" content="/drafts/nav">
+<meta name="footer" content="/drafts/footer">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
+  move-to-http-header="true"
+>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem" src="/scripts/aem.js" type="module"></script>
+<script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div>
+  <h1>Form block inside a fragment</h1>
+  <p>Check 1c: the form section is loaded through the fragment block, so it is not a direct child of main.</p>
+  <div class="fragment">
+    <div>
+      <div><a href="/drafts/form-fragment">/drafts/form-fragment</a></div>
+    </div>
+  </div>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>

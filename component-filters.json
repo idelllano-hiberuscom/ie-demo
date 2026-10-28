@@ -15,7 +15,22 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "accordion",
+      "breadcrumb",
+      "form"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": [
+      "accordion-item"
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "components": [
+      "breadcrumb-item"
     ]
   },
   {
@@ -37,6 +52,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "form-field"
     ]
   }
 ]
