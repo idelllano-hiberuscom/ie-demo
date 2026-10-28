@@ -16,7 +16,14 @@
       "cards",
       "columns",
       "fragment",
+      "accordion",
       "form"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": [
+      "accordion-item"
     ]
   },
   {

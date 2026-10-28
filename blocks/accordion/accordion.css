@@ -1,0 +1,194 @@
+.accordion-container {
+    .accordion {
+        .accordion-item {
+            .accordion-item-label {
+                margin: 0;
+
+                .accordion-item-toggle {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--space-3);
+                    width: 100%;
+                    border-style: none;
+                    border-bottom: var(--border-width) solid var(--border-color-strong);
+                    padding: var(--space-2) 0;
+                    background: none;
+                    color: inherit;
+                    text-align: start;
+                    text-transform: inherit;
+                    cursor: pointer;
+
+                    .accordion-item-icon {
+                        display: flex;
+                        flex: none;
+                        align-items: center;
+                        justify-content: center;
+                        width: 48px;
+                        height: 48px;
+                    }
+
+                    .accordion-item-title {
+                        flex: 1;
+                    }
+
+                    .accordion-item-chevron {
+                        flex: none;
+                        width: 48px;
+                        height: 48px;
+                        transition: transform 0.2s ease;
+
+                        @media (prefers-reduced-motion: reduce) {
+                            transition: none;
+                        }
+                    }
+
+                    /* ── expanded ── */
+                    &[aria-expanded='true'] .accordion-item-chevron {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .accordion-item-body {
+                display: flex;
+                flex-direction: column;
+                gap: var(--section-padding);
+                padding-top: var(--section-padding);
+
+                /* display: flex above would otherwise override the UA rule for [hidden] */
+                &[hidden] {
+                    display: none;
+                }
+
+                /* no document after it: the body closes the item */
+                &:last-child {
+                    padding-bottom: var(--section-padding);
+                }
+
+                .accordion-item-text {
+                    > :first-child {
+                        margin-top: 0;
+                    }
+
+                    > :last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .accordion-item-gallery {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(min(100%, 234px), 1fr));
+                    gap: var(--space-6) var(--space-4);
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+
+                    img {
+                        display: block;
+                        width: 100%;
+                        aspect-ratio: 37 / 24;
+                        object-fit: cover;
+                    }
+                }
+
+                .accordion-item-details {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-8);
+                    padding-top: var(--section-padding);
+
+                    @media (width >= 600px) {
+                        flex-direction: row;
+                        align-items: flex-start;
+                        gap: var(--space-6);
+                    }
+
+                    .accordion-item-credits {
+                        display: flex;
+                        flex: 1;
+                        flex-direction: column;
+                        gap: calc(var(--space-6) + var(--space-1));
+
+                        .accordion-item-team-title {
+                            margin: 0;
+                            font-size: var(--heading-font-size-xl);
+                            line-height: calc(42 / 35);
+                        }
+
+                        .accordion-item-team {
+                            font-size: var(--body-font-size-s);
+
+                            > :first-child {
+                                margin-top: 0;
+                            }
+
+                            > :last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+
+                    .accordion-item-video {
+                        aspect-ratio: 37 / 24;
+
+                        @media (width >= 600px) {
+                            flex: 0 0 33%;
+                        }
+
+                        iframe {
+                            display: block;
+                            width: 100%;
+                            height: 100%;
+                            border: 0;
+                        }
+                    }
+                }
+            }
+
+            /* the original document cell, kept as the last child of the item */
+            .accordion-item-document {
+                padding-top: calc(var(--space-6) + var(--space-1));
+                padding-bottom: var(--section-padding);
+
+                &[hidden] {
+                    display: none;
+                }
+
+                > p {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0;
+
+                    @media (width >= 600px) {
+                        align-items: flex-start;
+                    }
+                }
+
+                .accordion-item-download {
+                    padding: 0 var(--space-3);
+                    font-size: var(--body-font-size-xs);
+                    transition: background-color 0.33s, color 0.33s;
+
+                    @media (prefers-reduced-motion: reduce) {
+                        transition: none;
+                    }
+
+                    /* portal: dark fill and light text; active keeps no style of its own */
+                    &:hover,
+                    &:focus-visible {
+                        background-color: var(--text-color);
+                        color: var(--text-on-dark);
+                    }
+
+                    .accordion-item-download-context {
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        overflow: hidden;
+                        clip-path: inset(50%);
+                    }
+                }
+            }
+        }
+    }
+}
