@@ -810,8 +810,9 @@ function selectTab(panel, tab) {
 
 /**
  * program: category tabs (WAI-ARIA tablist with automatic activation), only when some card
- * has a category (EV-04, reglas_variante_program). The tabs follow the order in which each
- * category first appears. 1:1 with the portal: no tab is selected on load and every card shows,
+ * has a category (EV-04, reglas_variante_program). The tabs are sorted alphabetically, as on the
+ * portal (Doctorates, Lifelong Learning, Masters…), so the cards keep the portal order whatever
+ * category comes first. 1:1 with the portal: no tab is selected on load and every card shows,
  * in its order; a tab filters when pressed. Cards without category show in every tab. Below
  * 768px a select (the portal one) replaces the tabs.
  * @param {Element} block the block
@@ -820,7 +821,7 @@ function selectTab(panel, tab) {
  */
 function buildTabs(block, panel, labels) {
   const categories = [...new Set([...panel.querySelectorAll('.cards-list > .cards-card[data-category]')]
-    .map((card) => card.dataset.category))];
+    .map((card) => card.dataset.category))].sort((a, b) => a.localeCompare(b));
   if (!categories.length) return;
 
   const tablist = document.createElement('div');
