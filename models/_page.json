@@ -21,6 +21,16 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "template",
+          "label": "Template",
+          "options": [
+            { "name": "Default", "value": "" },
+            { "name": "Article (news, publication)", "value": "article" }
+          ]
         }
       ]
     }
