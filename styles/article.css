@@ -1,0 +1,85 @@
+/* template: article (news item and publication), loaded only when body has .article.
+   Values 1:1 portal. Overrides of the body.article rules in styles.css raise specificity
+   with main > .section, so they win whatever the load order. */
+
+/* news: the body section keeps the grey page band of the breadcrumb section; the 64px above
+   the title is its padding (as a title margin it collapsed out of the band and showed white).
+   .section.section outranks the share-container padding-top: 0 of styles.css (this section
+   also holds the compact share bar) */
+body.article main > .section.section:has(h1):not(.publication-detail-container) {
+    padding-block: 64px 56px; /* 1:1 portal */
+    background-color: var(--background-subtle);
+
+    h1 {
+        margin-top: 0;
+    }
+}
+
+/* news: the breadcrumb has a section of its own; the 56px under the shared header and body
+   (styles.css, publication) does not apply to it: 68 / 70 / 93px band as on the portal */
+body.article main > .section:first-child:not(.publication-detail-container, :has(h1)) {
+    padding-bottom: 0;
+}
+
+/* news: date and share bar share one 38px row from 768px; below it they stack */
+body.article main > .section h1 + p {
+    margin: 0 0 16px;
+    color: #555; /* 1:1 portal */
+    font-family: var(--heading-font-family);
+    font-size: 11px; /* 1:1 portal */
+    line-height: 16px;
+
+    @media (width >= 768px) {
+        margin-bottom: -38px;
+        line-height: 38px; /* 1:1 portal: height of the share row */
+    }
+}
+
+/* news body copy: 14/22 on mobile, links without underline as on the portal */
+body.article main > .section .share-wrapper ~ .default-content-wrapper {
+    p {
+        @media (width < 768px) {
+            font-size: 14px; /* 1:1 portal (mobile) */
+            line-height: 22px;
+        }
+    }
+
+    a:any-link:not(.button) {
+        text-decoration: none; /* 1:1 portal */
+    }
+
+    /* 1:1 portal: a superscript does not make its line taller */
+    sup {
+        line-height: 0;
+    }
+
+    /* inline image: full width on mobile, 300px and centred from 768px, 32px under it */
+    picture img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin-inline: auto;
+        padding-bottom: 32px;
+
+        @media (width >= 768px) {
+            width: 300px; /* 1:1 portal */
+        }
+    }
+}
+
+/* news: the YouTube embed is a plain 640 × 360 player on the portal */
+body.article main > .section .embed-wrapper {
+    padding-inline: var(--space-2);
+
+    @media (width >= 600px) {
+        padding-inline: 56px;
+    }
+
+    .embed {
+        max-width: 640px; /* 1:1 portal */
+        height: 360px; /* 1:1 portal: the player keeps 360px at every width */
+        margin-bottom: 6px; /* 1:1 portal: the inline player leaves 6px under it in its paragraph */
+        aspect-ratio: auto;
+    }
+}

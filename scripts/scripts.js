@@ -129,6 +129,11 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  // article template: its 1:1 portal adjustments, only on those pages and before the
+  // first section renders, so the header and body do not jump once it arrives
+  if (document.body.classList.contains('article')) {
+    await loadCSS(`${window.hlx.codeBasePath}/styles/article.css`);
+  }
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
