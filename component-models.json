@@ -285,6 +285,86 @@
     ]
   },
   {
+    "id": "carousel",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Presentación del carrusel. Elige una sola: galería de fotos, logos, tarjetas, testimonios o blog (2 tarjetas enlazadas por vista).",
+        "options": [
+          {
+            "name": "Galería",
+            "value": "gallery"
+          },
+          {
+            "name": "Logos",
+            "value": "logos"
+          },
+          {
+            "name": "Tarjetas",
+            "value": "cards"
+          },
+          {
+            "name": "Testimonios",
+            "value": "testimonial"
+          },
+          {
+            "name": "Blog",
+            "value": "blog"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Imagen",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_imageAlt",
+        "label": "Texto alternativo de la imagen",
+        "description": "Describe la imagen. En logos es el nombre de la empresa. Déjalo vacío solo si la imagen es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título",
+        "description": "Título de la tarjeta o entrada. En testimonios, el nombre de la persona."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Texto",
+        "description": "Descripción de la tarjeta. En testimonios, la cita; en blog, la categoría."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "linkText",
+        "label": "Texto del enlace",
+        "description": "Vacío con título: la diapositiva entera es el enlace y lo nombra su título (variante blog)."
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
