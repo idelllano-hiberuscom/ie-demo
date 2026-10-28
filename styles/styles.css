@@ -173,7 +173,11 @@ body {
     font-family: var(--body-font-family);
     font-size: var(--body-font-size-m);
     font-weight: var(--font-weight-regular);
-    line-height: calc(28 / 18);
+    line-height: calc(22 / 15); /* 1:1 portal: 15px/22px on mobile */
+
+    @media (width >= 600px) {
+        line-height: calc(28 / 18); /* 1:1 portal: 18px/28px */
+    }
 }
 
 body.appear {
@@ -227,7 +231,11 @@ h1 {
 
 h2 {
     font-size: var(--heading-font-size-xl);
-    line-height: calc(42 / 35);
+    line-height: calc(30 / 24); /* 1:1 portal: 24px/30px on mobile */
+
+    @media (width >= 600px) {
+        line-height: calc(42 / 35); /* 1:1 portal: 35px/42px */
+    }
 }
 
 h3 {
@@ -255,6 +263,12 @@ blockquote {
 b,
 strong {
     font-weight: var(--font-weight-bold);
+}
+
+/* 1:1 portal: superscripts do not open the line */
+sup,
+sub {
+    line-height: 0;
 }
 
 code,
@@ -298,12 +312,6 @@ button:focus-visible {
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
 }
 
-/* links inside running text: --link-color is 1.08:1 against --text-color, so colour alone is not enough (WCAG 1.4.1) */
-main p a:any-link,
-main li a:any-link {
-    text-decoration: underline;
-}
-
 /* buttons */
 p.button-wrapper {
     margin: 12px 0;
@@ -316,7 +324,8 @@ button.button {
     align-items: center;
     justify-content: center;
     max-width: 100%;
-    min-height: var(--button-height);
+    min-width: 211px; /* 1:1 portal */
+    min-height: 48px; /* 1:1 portal */
     margin: 0;
     border: 0;
     border-radius: var(--radius-none);
@@ -327,10 +336,9 @@ button.button {
     line-height: calc(16 / 11);
     text-transform: var(--heading-text-transform);
     text-decoration: none;
+    text-align: center;
     cursor: pointer;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 a.button.primary,
@@ -385,19 +393,71 @@ main > .section {
     padding: var(--section-padding) 0;
 }
 
+/* 1:1 portal: 16px gutter on mobile, 56px from 768px and 7.5% from 1024px (108px at 1440px) */
 main > .section > div {
     max-width: var(--content-max-width);
     margin: auto;
     padding: 0 var(--space-2);
+
+    @media (width >= 768px) {
+        padding: 0 56px;
+    }
+
+    @media (width >= 1024px) {
+        padding: 0 7.5%;
+    }
 }
 
 main > .section:first-of-type {
     padding-top: 0;
 }
 
-@media (width >= 900px) {
-    main > .section > div {
-        padding: 0 var(--space-4);
+/* 1:1 portal: the landing templates paint the page #f6f6f7; white is the exception */
+body:not(.article) main {
+    background-color: var(--background-alt);
+}
+
+/* 1:1 portal: default content of a section (intro text module) */
+main .default-content-wrapper {
+    > :where(:first-child) {
+        margin-top: 0;
+    }
+
+    h1 {
+        font-size: var(--heading-font-size-xl); /* 1:1 portal: the intro h1 is 35px/42px (24px/30px mobile) */
+        line-height: calc(30 / 24);
+
+        @media (width >= 600px) {
+            line-height: calc(42 / 35);
+        }
+    }
+
+    p {
+        margin-block: 1em; /* 1:1 portal: 18px between paragraphs (15px mobile) */
+    }
+
+    /* 1:1 portal: the title box is shorter than its line (25px), so the text starts 55px under the title glyphs */
+    :is(h1, h2) + p {
+        margin-top: 9px;
+
+        @media (width >= 600px) {
+            margin-top: 14px;
+        }
+    }
+
+    h3 + p {
+        @media (width >= 600px) {
+            margin-top: 8px; /* 1:1 portal */
+        }
+    }
+
+    > p:first-child {
+        margin-top: 0;
+    }
+
+    /* 1:1 portal: the section padding alone closes the section */
+    > :last-child {
+        margin-bottom: 0;
     }
 }
 
@@ -416,11 +476,13 @@ main .section.dark {
 /* a dark section nested in a fragment misses the main > .section padding, and its background makes that visible */
 :where(main .section .section.dark) {
     padding: var(--section-padding) var(--space-2);
-}
 
-@media (width >= 900px) {
-    :where(main .section .section.dark) {
-        padding-inline: var(--space-4);
+    @media (width >= 768px) {
+        padding-inline: 56px; /* 1:1 portal */
+    }
+
+    @media (width >= 1024px) {
+        padding-inline: 7.5%; /* 1:1 portal */
     }
 }
 
@@ -463,6 +525,54 @@ main .section.centered .default-content-wrapper > * {
     min-width: 0;
 }
 
+/* 1:1 portal: title and text keep to the 8-of-12 column from 768px */
+@media (width >= 768px) {
+    main .section.centered .default-content-wrapper > :not(.button-wrapper) {
+        flex-basis: 66.667%;
+        margin-inline: 16.667%; /* fills the row, so the buttons always start a new one */
+    }
+}
+
+/* 1:1 portal: the image of a centred section is a 96px icon */
+main .section.centered .default-content-wrapper > p:has(> picture) {
+    line-height: 0;
+
+    img {
+        width: 96px;
+    }
+
+    + h3 {
+        margin-top: 13px; /* 1:1 portal */
+
+        @media (width >= 600px) {
+            margin-top: 8px;
+        }
+    }
+}
+
+/* 1:1 portal: buttons 34px under a title, 22px under text (30px mobile), stacked 16px apart on mobile */
+main .section.centered .default-content-wrapper > .button-wrapper {
+    margin-bottom: 0;
+}
+
+main .section.centered .default-content-wrapper > :is(h2, h3) + .button-wrapper {
+    margin-top: 23px;
+
+    @media (width >= 600px) {
+        margin-top: 17px;
+    }
+}
+
+main .section.centered .default-content-wrapper > .button-wrapper + .button-wrapper {
+    margin-top: 16px;
+
+    /* on one row: same top as the first button */
+    @media (width >= 600px) {
+        align-self: flex-end;
+        margin-top: 0;
+    }
+}
+
 main .section.centered .default-content-wrapper a.button:any-link,
 main .section.centered .default-content-wrapper button.button {
     width: 100%;
@@ -479,6 +589,61 @@ main .section.centered .default-content-wrapper button.button {
     }
 }
 
+/* 1:1 portal: an h1-led text is the portal intro module, framed by 32px more */
+body:not(.article) main .default-content-wrapper:has(> h1:first-child) {
+    margin-block: 32px;
+}
+
+/* 1:1 portal: an h2 title followed by text keeps to 75% of the row from 768px */
+@media (width >= 768px) {
+    body:not(.article) main .section:not(.centered) .default-content-wrapper:has(> h2:first-child + p) > * {
+        max-width: 75%;
+    }
+}
+
+/* 1:1 portal: the title glyphs sit 6px higher (4px on mobile) than the line box suggests */
+body:not(.article) main .default-content-wrapper > :is(h1, h2, h3):first-child {
+    margin-top: -4px;
+
+    @media (width >= 600px) {
+        margin-top: -6px;
+    }
+}
+
+main .section.centered .default-content-wrapper > p:not(.button-wrapper) + .button-wrapper {
+    margin-top: 12px;
+
+    @media (width >= 600px) {
+        margin-top: 4px;
+    }
+}
+
+/* 1:1 portal: a dark band holding only a title is the portal title band (153px tall at 1440px, 64px inset) */
+main > .section.dark:not(.centered):has(> .default-content-wrapper:only-child > :is(h1, h2, h3):only-child) {
+    padding: 24px 0 17px;
+
+    @media (width >= 768px) {
+        padding: 32px 0 22px;
+    }
+
+    @media (width >= 1024px) {
+        padding: 64px 0 54px;
+    }
+
+    > .default-content-wrapper {
+        max-width: none;
+        padding-inline: 24px;
+
+        @media (width >= 768px) {
+            padding-inline: 32px;
+        }
+
+        @media (width >= 1024px) {
+            padding-inline: 64px;
+        }
+    }
+}
+
 /* template: article (news item and publication, metadata template=article); values 1:1 portal */
 body.article {
     main > .section > div {
@@ -489,6 +654,11 @@ body.article {
         &:not(.breadcrumb-wrapper) {
             max-width: 1000px;
         }
+    }
+
+    /* 1:1 portal: the full share band closes the page and the footer follows without a gap */
+    main > .section.share-container:last-child {
+        padding-bottom: 0;
     }
 
     /* header and body share the first section; the full share band follows without a gap */
@@ -513,8 +683,15 @@ body.article {
         }
     }
 
+    main > .section > .breadcrumb-wrapper {
+        @media (width >= 1024px) {
+            padding-inline: 7.5%; /* 1:1 portal */
+        }
+    }
+
     /* news: grey page band and its own breadcrumb spacing */
     main > .section:first-child:not(.publication-detail-container) {
+        padding-bottom: 0; /* 1:1 portal: the breadcrumb band is its own section */
         background-color: var(--background-subtle);
 
         .breadcrumb-wrapper {
@@ -581,7 +758,44 @@ body.article {
     /* news body copy after the compact share bar */
     main .share-wrapper ~ .default-content-wrapper p {
         margin-block: 32px;
-        font-size: 15px;
-        line-height: 24px;
+        font-size: 14px; /* 1:1 portal */
+        line-height: 22px; /* 1:1 portal */
+
+        @media (width >= 600px) {
+            font-size: 15px;
+            line-height: 24px;
+        }
+    }
+
+    /* news: the article body shares the grey band of the breadcrumb (1:1 portal: padding 64px 0 56px) */
+    main > .section:first-child:not(.publication-detail-container) + .section {
+        display: flow-root; /* the 64px title margin stays inside the grey band */
+        padding-bottom: 56px;
+        background-color: var(--background-subtle);
+
+        /* date and compact share bar in one row from 768px, the date alone above it on mobile */
+        .default-content-wrapper:has(+ .share-wrapper) > p:last-child {
+            margin: 24px 0 0;
+            color: var(--text-muted);
+            font-family: var(--heading-font-family);
+            font-size: 11px; /* 1:1 portal */
+            line-height: 16px; /* 1:1 portal */
+
+            @media (width >= 768px) {
+                margin-top: 35px; /* 1:1 portal: 24px + centred in the 38px row */
+            }
+        }
+
+        .default-content-wrapper + .share-wrapper {
+            margin-top: 16px; /* 1:1 portal */
+
+            @media (width >= 768px) {
+                margin-top: -27px; /* 1:1 portal: back onto the date row (16px date + 11px) */
+            }
+        }
+
+        .share-wrapper + .default-content-wrapper > p:first-child {
+            margin-top: 32px; /* 1:1 portal */
+        }
     }
 }
