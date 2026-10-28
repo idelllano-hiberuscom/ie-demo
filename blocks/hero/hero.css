@@ -314,3 +314,8 @@
         }
     }
 }
+
+/* variant dark-veil: darker veil measured on the portal hero of The Next Fifty (1:1 portal) */
+.hero-container .hero.dark-veil .hero-media::after {
+    opacity: 0.66;
+}

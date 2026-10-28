@@ -467,6 +467,11 @@ main .section.highlight {
     background-color: var(--background-alt);
 }
 
+/* section style: white — the page background is #f6f6f7 and some portal sections are white (1:1 portal) */
+main .section.white {
+    background-color: var(--background-color);
+}
+
 /* section style: dark (DH-07) */
 main .section.dark {
     background: var(--section-dark-background);

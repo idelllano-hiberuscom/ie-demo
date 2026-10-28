@@ -43,6 +43,10 @@
             {
               "name": "Centered",
               "value": "centered"
+            },
+            {
+              "name": "White",
+              "value": "white"
             }
           ]
         }

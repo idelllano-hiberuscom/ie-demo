@@ -177,6 +177,10 @@
           {
             "name": "Centered",
             "value": "centered"
+          },
+          {
+            "name": "White",
+            "value": "white"
           }
         ]
       }
@@ -702,6 +706,10 @@
           {
             "name": "Banner",
             "value": "banner"
+          },
+          {
+            "name": "Velo oscuro",
+            "value": "dark-veil"
           }
         ]
       },

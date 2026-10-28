@@ -34,6 +34,10 @@
             {
               "name": "Banner",
               "value": "banner"
+            },
+            {
+              "name": "Velo oscuro",
+              "value": "dark-veil"
             }
           ]
         },
