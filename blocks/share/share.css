@@ -1,0 +1,145 @@
+.share-container {
+    .share {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-1);
+        padding-block: var(--space-3);
+        background-color: var(--text-color);
+        color: var(--text-on-dark);
+
+        /* full-bleed band without leaving the section grid: a shadow paints, it does not scroll */
+        box-shadow: 0 0 0 100vmax var(--text-color);
+        clip-path: inset(0 -100vmax);
+
+        @media (width >= 600px) {
+            flex-direction: row;
+            justify-content: center;
+            gap: var(--space-3);
+        }
+
+        @media (width >= 900px) {
+            padding-block: var(--space-4);
+        }
+
+        .share-label {
+            font-family: var(--heading-font-family);
+            font-size: var(--body-font-size-xxs);
+            font-weight: var(--font-weight-heavy);
+            line-height: calc(16 / 11);
+            text-transform: var(--heading-text-transform);
+
+            /* the label is the authored row (div > div > p): its paragraph adds no space */
+            p {
+                margin: 0;
+            }
+        }
+
+        .share-link {
+            border: var(--border-width) solid currentcolor;
+            color: inherit;
+        }
+
+        ul {
+            display: flex;
+            gap: var(--space-2);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            @media (width >= 900px) {
+                gap: var(--space-3);
+            }
+
+            .share-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+                width: 50px;
+                height: 50px;
+                border-radius: var(--radius-round);
+            }
+
+            .icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        .share-source {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            margin-block-start: var(--space-2);
+            border-radius: 4px;
+            padding: var(--space-1) 12px; /* divergencia deliberada: 12px measured on the portal, off the 8px scale (contract §4) */
+
+            @media (width >= 600px) {
+                margin-block-start: 0;
+            }
+
+            .icon {
+                flex: none;
+            }
+
+            .share-text {
+                font-family: var(--heading-font-family);
+                font-size: 9px;
+                line-height: calc(14 / 9);
+                text-transform: var(--heading-text-transform);
+            }
+        }
+
+        /* ── compact: header of the news item and of the publication ──
+           No hover yet: the portal paints each network in its own colour, which needs new
+           colour tokens and goes back to Gate 1 (orchestrator decision, EDS-COMP-011). */
+        &.compact {
+            flex-flow: row wrap;
+            gap: var(--space-2);
+            padding-block: 0;
+            color: var(--text-color);
+            background-color: transparent;
+            box-shadow: none;
+            clip-path: none;
+
+            @media (width >= 600px) {
+                justify-content: flex-end;
+            }
+
+            .share-label {
+                color: var(--text-muted);
+                font-weight: var(--heading-font-weight-regular);
+            }
+
+            .share-link {
+                border-color: var(--border-color);
+            }
+
+            ul {
+                gap: var(--space-2);
+
+                .share-link {
+                    width: 38px;
+                    height: 38px;
+                }
+
+                .icon {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            .share-source {
+                gap: 6px; /* divergencia deliberada: 6px measured on the portal compact bar, off the 8px scale */
+                margin-block-start: 0;
+                padding: 9px 12px; /* divergencia deliberada: 9px 12px measured on the portal compact bar, off the 8px scale */
+
+                .icon {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+    }
+}

@@ -486,5 +486,30 @@
         "label": "Texto del enlace secundario"
       }
     ]
+  },
+  {
+    "id": "share",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variante",
+        "description": "Compacta: barra clara de la cabecera de la noticia o de la publicación. Sin variante: franja oscura tras el cuerpo.",
+        "options": [
+          {
+            "name": "Compacta",
+            "value": "compact"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Etiqueta",
+        "description": "Texto que precede a los enlaces, por ejemplo «Share». Opcional: déjalo vacío para mostrar solo los iconos."
+      }
+    ]
   }
 ]
