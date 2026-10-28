@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Sticky CTA in a fragment</title>
+<meta name="description" content="Test page for the sticky-cta block nested in a fragment, with an optional field omitted (brochureName): the fixed bar must keep its place and behaviour.">
+<meta name="nav" content="/drafts/nav">
+<meta name="footer" content="/drafts/footer">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
+  move-to-http-header="true"
+>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem" src="/scripts/aem.js" type="module"></script>
+<script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div>
+  <h1>Sticky CTA block inside a fragment</h1>
+  <p>Check 1c: the sticky-cta section is loaded through the fragment block, so it is not a direct child of main. The brochure title row is omitted on purpose.</p>
+  <div class="fragment">
+    <div>
+      <div><a href="/drafts/sticky-cta-fragment">/drafts/sticky-cta-fragment</a></div>
+    </div>
+  </div>
+  <p>Paragraph of filler text so the page scrolls under the fixed bar. Business leaders have the power to inspire sustainable growth and accelerate digital transformation for real impact.</p>
+  <p><a href="#top-of-page-mock">Last link of the page</a></p>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>
