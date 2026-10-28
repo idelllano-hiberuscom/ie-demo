@@ -53,14 +53,15 @@ body.article main > .section .share-wrapper ~ .default-content-wrapper {
         line-height: 0;
     }
 
-    /* inline image: full width on mobile, 300px and centred from 768px, 32px under it */
+    /* inline image: full width on mobile, 300px and centred from 768px. Under it, 32px plus
+       the 56px of the empty paragraph the portal has after the image (AEM drops it on save) */
     picture img {
         display: block;
         width: 100%;
         max-width: 100%;
         height: auto;
         margin-inline: auto;
-        padding-bottom: 32px;
+        padding-bottom: 88px; /* 1:1 portal: 32px + empty <p> of 56px */
 
         @media (width >= 768px) {
             width: 300px; /* 1:1 portal */
