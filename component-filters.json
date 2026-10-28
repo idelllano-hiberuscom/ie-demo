@@ -16,7 +16,8 @@
       "cards",
       "columns",
       "fragment",
-      "accordion"
+      "accordion",
+      "form"
     ]
   },
   {
@@ -44,6 +45,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "form-field"
     ]
   }
 ]

@@ -59,7 +59,8 @@
         "cards",
         "columns",
         "fragment",
-        "accordion"
+        "accordion",
+        "form"
       ]
     }
   ]
