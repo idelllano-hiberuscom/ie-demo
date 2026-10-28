@@ -25,8 +25,9 @@ const YOUTUBE_ID_PATTERN = /(?:vi\/|embed\/|v=|youtu\.be\/)([\w-]{11})/;
 
 // [EDS-COMP-009] The card fields are mediaHeading and mediaDescription (contract: media + Title
 // and media + Text). Those names ended in the xwalk field-collapse suffixes Title and Text and
-// AEM would render them as attributes of a missing "media" field. Renamed by decision of the person on
-// 2026-10-28; the contract and the ticket mapping are updated at the Gate 2 re-approval.
+// AEM would render them as attributes of a missing "media" field. Renamed by decision of the
+// person on 2026-10-28; the contract and the ticket mapping are updated at the Gate 2
+// re-approval.
 /** One row per field, in model order (contract §3b). classes is a block option, not a row. */
 const FIELD_ORDER = ['title', 'text', 'image', 'video', 'mediaHeading', 'mediaDescription', 'link'];
 
