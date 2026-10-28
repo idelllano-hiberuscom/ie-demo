@@ -478,3 +478,110 @@ main .section.centered .default-content-wrapper button.button {
         width: auto;
     }
 }
+
+/* template: article (news item and publication, metadata template=article); values 1:1 portal */
+body.article {
+    main > .section > div {
+        @media (width >= 600px) {
+            padding-inline: 56px;
+        }
+
+        &:not(.breadcrumb-wrapper) {
+            max-width: 1000px;
+        }
+    }
+
+    /* header and body share the first section; the full share band follows without a gap */
+    main > .section:first-child {
+        padding-bottom: 56px;
+    }
+
+    main > .section + .section.share-container {
+        padding-top: 0;
+    }
+
+    /* breadcrumb: publication */
+    main .publication-detail-container .breadcrumb-wrapper {
+        padding-block: 1px;
+
+        @media (width >= 600px) {
+            padding-block: 17px;
+        }
+
+        @media (width >= 900px) {
+            padding-block: 32px;
+        }
+    }
+
+    /* news: grey page band and its own breadcrumb spacing */
+    main > .section:first-child:not(.publication-detail-container) {
+        background-color: var(--background-subtle);
+
+        .breadcrumb-wrapper {
+            padding-block: 58px 16px;
+
+            @media (width >= 600px) {
+                padding-block: 49px 1px;
+            }
+
+            @media (width >= 900px) {
+                padding-block: 48px 0;
+            }
+        }
+    }
+
+    main h1 {
+        max-width: 900px;
+        margin-top: 64px;
+        margin-bottom: 24px;
+        font-family: var(--body-font-family);
+        font-size: 28px;
+        font-weight: var(--font-weight-regular);
+        line-height: 34px;
+        text-transform: none;
+
+        @media (width >= 600px) {
+            font-size: 36px;
+            line-height: 46px;
+        }
+
+        /* decorative rule under the title */
+        &::after {
+            content: "";
+            display: block;
+            width: 32px;
+            height: 2px;
+            margin-top: 24px;
+            background-color: var(--brand-primary);
+        }
+    }
+
+    /* publication: the portal title wraps a paragraph whose 32px margin pushes the rule down */
+    main .publication-detail-container {
+        padding-bottom: 88px;
+
+        h1 {
+            max-width: 90%;
+            margin-bottom: 48px;
+
+            @media (width >= 600px) {
+                margin-bottom: 24px;
+            }
+
+            &::after {
+                margin-top: 32px;
+            }
+        }
+
+        .share-wrapper + .publication-detail-wrapper {
+            margin-top: 48px;
+        }
+    }
+
+    /* news body copy after the compact share bar */
+    main .share-wrapper ~ .default-content-wrapper p {
+        margin-block: 32px;
+        font-size: 15px;
+        line-height: 24px;
+    }
+}
