@@ -64,9 +64,10 @@
         "media-text",
         "carousel",
         "breadcrumb",
+        "form",
+        "tabs",
         "share",
         "publication-detail",
-        "form",
         "embed"
       ]
     }

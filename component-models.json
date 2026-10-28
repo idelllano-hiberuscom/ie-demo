@@ -762,5 +762,43 @@
         "description": "Texto que precede a los enlaces, por ejemplo «Share». Opcional: déjalo vacío para mostrar solo los iconos."
       }
     ]
+  },
+  {
+    "id": "tabs-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Etiqueta de la pestaña",
+        "description": "Texto del botón de la pestaña. Si lo dejas vacío, se usa el titular."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Titular"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Subtítulo",
+        "description": "Se muestra en cursiva bajo el titular."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Vídeo (URL de YouTube)",
+        "description": "Acepta una URL de YouTube (watch, youtu.be o embed) o la de su miniatura (img.youtube.com/vi/…)."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "richtext",
+        "label": "Texto"
+      }
+    ]
   }
 ]
