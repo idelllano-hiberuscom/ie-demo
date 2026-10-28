@@ -1,27 +1,885 @@
-.cards > ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
-}
+.cards-container {
+    .cards-wrapper {
+        &:not(:first-child) {
+            margin-top: var(--section-padding);
+        }
 
-.cards > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
-}
+        > .cards {
+            /* the block is the list of cards (role=list); numbered, stats and program hold them
+               in a generated .cards-list, next to their controls */
+            display: grid;
 
-.cards .cards-card-body {
-  margin: 16px;
-}
+            /* 300px: narrowest card track, so 2 cards share a row from tablet and 3 on desktop */
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: var(--space-8) var(--space-4);
 
-.cards .cards-card-image {
-  line-height: 0;
-}
+            /* every variant styles its parts at the same depth (.variant .part), so a later
+               rule never loses to an earlier, deeper one */
+            .cards-card {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-3);
+                min-width: 0;
 
-.cards > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+                &[hidden] {
+                    display: none;
+                }
+            }
+
+            .cards-card-image img {
+                display: block;
+                width: 100%;
+                aspect-ratio: var(--card-image-ratio);
+                object-fit: cover;
+            }
+
+            .cards-card-body {
+                display: flex;
+                flex: 1;
+                flex-direction: column;
+                gap: var(--space-1);
+            }
+
+            .cards-card-title {
+                h3,
+                p {
+                    margin: 0;
+                    font-size: var(--heading-font-size-s);
+                    line-height: calc(22 / 15);
+                }
+            }
+
+            .cards-card-text {
+                font-size: var(--body-font-size-s);
+                line-height: calc(24 / 15);
+
+                > :first-child {
+                    margin-top: 0;
+                }
+
+                > :last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            .cards-card-actions {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-2);
+                margin-top: auto;
+                padding-top: var(--space-3);
+
+                p {
+                    margin: 0;
+                }
+
+                /* hover: not measured on the portal (contract §7), so none is invented;
+                   the links keep the global a:hover of styles.css (orchestrator decision) */
+                a.button:any-link {
+                    width: 100%;
+                }
+            }
+
+            .cards-sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip-path: inset(50%);
+                white-space: nowrap;
+            }
+
+            /* ── no-image ── */
+            &.no-image {
+                gap: var(--space-6) var(--space-4);
+
+                .cards-card {
+                    background-color: var(--background-color);
+                    color: var(--text-color);
+                }
+
+                .cards-card-image {
+                    display: none;
+                }
+
+                .cards-card-body {
+                    padding: var(--space-4);
+                }
+
+                .cards-card-actions {
+                    padding-top: var(--space-4);
+                }
+            }
+
+            /* ── numbered ── */
+            &.numbered {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: var(--space-3);
+
+                .cards-list {
+                    display: grid;
+                    align-self: stretch;
+                    grid-template-columns: minmax(0, 1fr);
+                    gap: var(--space-8) var(--space-6);
+                    counter-reset: cards-number;
+
+                    @media (width >= 600px) {
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                    }
+                }
+
+                .cards-card {
+                    counter-increment: cards-number;
+                }
+
+                .cards-card-body {
+                    display: grid;
+                    grid-template-columns: auto minmax(0, 1fr);
+                    align-content: start;
+                    gap: var(--space-3) var(--space-2);
+
+                    &::before {
+                        content: counter(cards-number, decimal-leading-zero) ".";
+                        grid-row: span 2;
+                        font-family: var(--heading-font-family);
+                        font-size: var(--heading-font-size-l);
+                        font-weight: var(--font-weight-heavy);
+                        line-height: calc(38 / 30);
+
+                        /* tablet: two columns; the portal scales the title down to 19.9px there (contract §2) */
+                        @media (width >= 600px) {
+                            font-size: var(--body-font-size-m);
+                        }
+
+                        @media (width >= 900px) {
+                            font-size: var(--heading-font-size-l);
+                        }
+                    }
+
+                    > * {
+                        grid-column: 2;
+                    }
+                }
+
+                .cards-card-title h3 {
+                    font-size: var(--heading-font-size-l);
+                    line-height: calc(38 / 30);
+                    overflow-wrap: break-word;
+
+                    @media (width >= 600px) {
+                        font-size: var(--body-font-size-m);
+                    }
+
+                    @media (width >= 900px) {
+                        font-size: var(--heading-font-size-l);
+                    }
+                }
+
+                .cards-card-text {
+                    font-size: var(--body-font-size-m);
+                    line-height: calc(28 / 18);
+                }
+
+                .cards-show-all {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: var(--space-8);
+                    height: var(--space-8);
+                    border: 0;
+                    border-radius: var(--radius-round);
+                    padding: 0;
+                    background-color: var(--background-color);
+                    box-shadow: var(--shadow-card);
+                    color: var(--brand-primary);
+                    cursor: pointer;
+
+                    svg {
+                        width: var(--space-4);
+                        height: var(--space-4);
+                    }
+                }
+            }
+
+            /* ── overlay: tiles that open a full-width panel below their row ── */
+            &.overlay {
+                grid-template-columns: minmax(0, 1fr);
+
+                /* dense: the open panel takes the next full row and the tiles after it fill
+                   the gaps of their own row, so the panel lands under the row of its tile */
+                grid-auto-flow: row dense;
+                gap: var(--space-2);
+
+                @media (width >= 600px) {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+
+                @media (width >= 900px) {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                }
+
+                .cards-card {
+                    display: contents;
+                }
+
+                .cards-card-tile {
+                    position: relative;
+                    isolation: isolate;
+                    display: flex;
+                    flex-direction: column;
+                    height: 320px; /* tile height measured on the portal (contract §4) */
+                    overflow: hidden;
+                    color: var(--text-on-dark);
+                }
+
+                .cards-card-image {
+                    position: absolute;
+                    inset: 0;
+                    z-index: -1;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background-color: var(--overlay-color);
+                    }
+
+                    picture,
+                    img {
+                        height: 100%;
+                    }
+
+                    img {
+                        aspect-ratio: auto;
+                    }
+                }
+
+                .cards-card-body {
+                    gap: var(--space-2);
+                    padding: calc(var(--space-8) + var(--space-4)) var(--space-2) var(--space-2);
+                }
+
+                .cards-card-toggle {
+                    width: 100%;
+                    border: 0;
+                    padding: 0;
+                    background: none;
+                    color: inherit;
+                    text-align: start;
+                    text-transform: inherit;
+                    cursor: pointer;
+
+                    /* the whole tile opens the panel, as on the portal */
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                    }
+                }
+
+                /* panel measured on the portal: 16px + 24px of padding, title 30/38, CTA 32px below */
+                .cards-card-details {
+                    display: flex;
+                    grid-column: 1 / -1;
+                    flex-direction: column;
+                    padding: calc(var(--space-2) + var(--space-3));
+
+                    &[hidden] {
+                        display: none;
+                    }
+                }
+
+                .cards-card-details-title {
+                    margin: 0 0 var(--space-3);
+                    font-family: var(--heading-font-family);
+                    font-size: var(--heading-font-size-l);
+                    font-weight: var(--font-weight-heavy);
+                    line-height: calc(38 / 30);
+                    text-transform: var(--heading-text-transform);
+                }
+
+                .cards-card-actions {
+                    align-items: flex-start;
+                    margin-top: 0;
+                    padding-top: var(--space-4);
+
+                    a.button:any-link {
+                        width: auto;
+                        min-width: 224px; /* CTA of the panel measured on the portal (computed-styles, overlay) */
+                    }
+                }
+            }
+
+            /* ── profile ── */
+            &.profile {
+                grid-template-columns: minmax(0, 1fr);
+                gap: var(--space-3);
+
+                @media (width >= 600px) {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: var(--space-4);
+                }
+
+                @media (width >= 1200px) {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    gap: var(--space-6);
+                }
+
+                .cards-card {
+                    position: relative;
+                    isolation: isolate;
+                    display: grid;
+                    grid-template-columns: auto minmax(0, 1fr);
+                    grid-template-rows: auto 1fr auto;
+                    gap: 0;
+                    color: var(--text-on-dark);
+
+                    /* the card starts below and right of the photo, which overlaps its corner */
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: var(--space-2) 0 0 var(--space-2);
+                        z-index: -1;
+                        background-color: var(--brand-primary);
+                    }
+                }
+
+                .cards-card-image {
+                    width: 136px; /* photo measured on the mobile capture (contract §2) */
+
+                    @media (width >= 600px) {
+                        width: 112px; /* photo measured on the portal, 111px (contract §4) */
+                    }
+
+                    img {
+                        aspect-ratio: 6 / 7;
+                    }
+                }
+
+                .cards-card-body {
+                    display: contents;
+                }
+
+                .cards-card-title {
+                    align-self: end;
+                    padding-inline: var(--space-2);
+                }
+
+                .cards-card-text {
+                    grid-column: 1 / -1;
+                    padding: var(--space-3) var(--space-3) 0 var(--space-4);
+                    font-size: var(--body-font-size-xs);
+                    font-style: italic;
+                    line-height: calc(20 / 13);
+                }
+
+                .cards-card-actions {
+                    grid-column: 1 / -1;
+                    align-items: flex-end;
+                    padding: var(--space-6) var(--space-3) var(--space-3);
+
+                    a:any-link {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: var(--space-2);
+                        color: inherit;
+                        font-family: var(--heading-font-family);
+                        font-size: var(--body-font-size-xxs);
+                        font-weight: var(--font-weight-heavy);
+                        line-height: calc(16 / 11);
+                        text-transform: var(--heading-text-transform);
+                        text-decoration: none;
+
+                        &::after {
+                            content: "";
+                            width: var(--space-2);
+                            height: var(--space-2);
+                            border: solid currentcolor;
+                            border-width: calc(var(--border-width) * 2) calc(var(--border-width) * 2) 0 0;
+                            transform: rotate(45deg);
+                        }
+                    }
+                }
+            }
+
+            /* ── program ── */
+            &.program {
+                display: flex;
+                flex-direction: column;
+                gap: calc(var(--space-6) + var(--space-4));
+
+                .cards-tabs {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: var(--space-2);
+                }
+
+                .cards-tab {
+                    border: var(--border-width) solid var(--border-color-strong);
+                    padding: var(--space-1) var(--space-2);
+                    background: none;
+                    color: var(--text-color);
+                    font-family: var(--heading-font-family);
+                    font-size: var(--body-font-size-xxs);
+                    font-weight: var(--font-weight-heavy);
+                    line-height: calc(16 / 11);
+                    text-transform: var(--heading-text-transform);
+                    cursor: pointer;
+
+                    &[aria-selected='true'] {
+                        background-color: var(--text-color);
+                        color: var(--background-color);
+                    }
+                }
+
+                .cards-panel {
+                    position: relative;
+                }
+
+                .cards-arrow {
+                    position: absolute;
+                    top: 50%;
+                    z-index: 1;
+                    display: none;
+                    align-items: center;
+                    justify-content: center;
+                    width: var(--space-4);
+                    height: var(--space-6);
+                    border: 0;
+                    padding: 0;
+                    background: none;
+                    color: var(--text-color);
+                    cursor: pointer;
+                    translate: 0 -50%;
+
+                    @media (width >= 900px) {
+                        display: flex;
+                    }
+
+                    /* an end of the list: hidden as in the captures (orchestrator decision) */
+                    &[aria-disabled='true'] {
+                        visibility: hidden;
+                    }
+
+                    svg {
+                        width: var(--space-4);
+                        height: var(--space-4);
+                    }
+                }
+
+                .cards-prev {
+                    left: calc(var(--space-4) * -1);
+
+                    svg {
+                        transform: scaleX(-1);
+                    }
+                }
+
+                .cards-next {
+                    right: calc(var(--space-4) * -1);
+                }
+
+                .cards-list {
+                    display: flex;
+                    gap: var(--space-3);
+                    overflow: auto hidden;
+                    scroll-snap-type: x mandatory;
+                    scrollbar-width: none;
+
+                    @media (prefers-reduced-motion: no-preference) {
+                        scroll-behavior: smooth;
+                    }
+                }
+
+                .cards-card {
+                    position: relative;
+                    flex: 0 0 min(333px, 75%); /* program card width measured on the portal (contract §2) */
+                    gap: 0;
+                    background-color: var(--background-subtle);
+                    scroll-snap-align: start;
+                }
+
+                .cards-card-image {
+                    position: relative;
+                    height: calc(var(--space-8) + var(--space-4)); /* 96px image header of the program card (contract §6) */
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background-color: var(--overlay-color);
+                    }
+
+                    picture,
+                    img {
+                        height: 100%;
+                    }
+
+                    img {
+                        aspect-ratio: auto;
+                    }
+                }
+
+                .cards-card-body {
+                    gap: var(--space-4);
+                    padding: var(--space-3) var(--space-2) var(--space-2);
+                }
+
+                .cards-card-title h3 {
+                    color: var(--brand-primary);
+                }
+
+                .cards-card-facts {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: var(--space-2) var(--space-3);
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                }
+
+                .cards-card-fact {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: var(--space-1);
+                    color: var(--brand-primary);
+                    font-size: var(--body-font-size-xs);
+                    font-weight: var(--font-weight-semibold);
+                    line-height: calc(20 / 13);
+                }
+
+                .cards-card-fact-icon {
+                    display: flex;
+                    flex: none;
+                    align-items: center;
+                    height: calc(20 / 13 * 1em);
+
+                    svg {
+                        width: var(--icon-size);
+                        height: var(--icon-size);
+                    }
+                }
+
+                .cards-card-fact-value p {
+                    margin: 0;
+                }
+
+                .cards-card-text {
+                    font-size: var(--body-font-size-xs);
+                    line-height: calc(22 / 13);
+                }
+
+                .cards-card-actions {
+                    padding-top: 0;
+
+                    a:any-link:not(.button) {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: var(--space-1);
+                        padding: var(--space-2);
+                        font-family: var(--heading-font-family);
+                        font-size: var(--body-font-size-xxs);
+                        font-weight: var(--font-weight-heavy);
+                        line-height: calc(16 / 11);
+                        text-transform: var(--heading-text-transform);
+                        text-decoration: none;
+
+                        &::after {
+                            content: "";
+                            width: 6px; /* chevron measured on the portal */
+                            height: 6px;
+                            border: solid currentcolor;
+                            border-width: var(--border-width) var(--border-width) 0 0;
+                            transform: rotate(45deg);
+                        }
+                    }
+                }
+            }
+
+            /* ── steps ── */
+            &.steps {
+                grid-template-columns: minmax(0, 1fr);
+                gap: var(--space-6);
+                counter-reset: cards-step;
+
+                @media (width >= 900px) {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: var(--space-8);
+                }
+
+                .cards-card-image {
+                    position: relative;
+                    aspect-ratio: 3 / 4; /* illustration panel measured on the portal, 365 × 480 (contract §2) */
+                    background-color: var(--background-color);
+
+                    img {
+                        position: absolute;
+                        inset: var(--space-4);
+                        width: calc(100% - 2 * var(--space-4));
+                        height: calc(100% - 2 * var(--space-4));
+                        aspect-ratio: auto;
+                        object-fit: contain;
+                    }
+                }
+
+                .cards-card {
+                    gap: var(--space-6);
+
+                    @media (width >= 600px) {
+                        display: grid;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                    }
+
+                    /* desktop: text and illustration panels flow through the 3-column grid */
+                    @media (width >= 900px) {
+                        display: contents;
+                    }
+
+                    /* tablet: the illustration alternates sides, as on the portal */
+                    &:nth-child(even) .cards-card-image {
+                        order: -1;
+
+                        @media (width >= 900px) {
+                            order: 0;
+                        }
+                    }
+                }
+
+                /* desktop: the last illustration fills the rest of its row, as on the portal */
+                .cards-card-wide {
+                    @media (width >= 900px) {
+                        grid-column: span 2;
+                        aspect-ratio: 3 / 2;
+                    }
+                }
+
+                .cards-card-body {
+                    padding: var(--space-4);
+                    background-color: var(--background-color);
+                    counter-increment: cards-step;
+                }
+
+                .cards-card-title {
+                    display: flex;
+                    flex-direction: column;
+                    gap: var(--space-2);
+
+                    /* the step number of the portal is an image; here it is a CSS counter (contract §10) */
+                    &::before {
+                        content: counter(cards-step);
+                        color: var(--brand-primary);
+                        font-family: var(--heading-font-family);
+                        font-size: var(--heading-font-size-xxl);
+                        font-weight: var(--font-weight-heavy);
+                        line-height: 1;
+                    }
+
+                    h3 {
+                        font-size: var(--body-font-size-m);
+                        line-height: calc(24 / 18);
+                    }
+                }
+
+                .cards-card-text {
+                    font-size: var(--body-font-size-xs);
+                    line-height: calc(22 / 13);
+                }
+            }
+
+            /* ── stats: one-figure carousel below 900px, three columns from it ── */
+            &.stats {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 0;
+
+                .cards-list {
+                    display: flex;
+                    grid-area: 1 / 1;
+                    overflow: auto hidden;
+                    scroll-snap-type: x mandatory;
+                    scrollbar-width: none;
+
+                    @media (prefers-reduced-motion: no-preference) {
+                        scroll-behavior: smooth;
+                    }
+
+                    @media (width >= 900px) {
+                        display: grid;
+                        grid-template-columns: repeat(3, minmax(0, 1fr));
+                        overflow: visible;
+                    }
+                }
+
+                .cards-card {
+                    flex: 0 0 100%;
+                    padding: var(--space-4) 0;
+                    scroll-snap-align: start;
+                    text-align: center;
+
+                    @media (width >= 900px) {
+                        padding: var(--space-8) 0;
+                    }
+                }
+
+                .cards-card-body {
+                    gap: var(--space-2);
+                }
+
+                .cards-card-title p {
+                    font-family: var(--heading-font-family);
+                    font-size: 64px; /* divergencia deliberada: cifra de stats sin token, medida en la captura móvil (contrato §2); el token va al paquete de reapertura del Gate 1 */
+                    font-weight: var(--font-weight-heavy);
+                    line-height: 1;
+                    text-transform: var(--heading-text-transform);
+
+                    @media (width >= 900px) {
+                        font-size: 90px; /* divergencia deliberada: 90px medidos en el portal; el token --display-font-size va al paquete de reapertura del Gate 1 */
+                    }
+                }
+
+                .cards-card-text {
+                    font-family: var(--heading-font-family);
+                    font-weight: var(--font-weight-heavy);
+                    line-height: calc(22 / 15);
+                    text-transform: var(--heading-text-transform);
+                }
+
+                /* arrows over the figure (tablet capture), dots below it; none from 900px */
+                .cards-controls {
+                    display: contents;
+
+                    @media (width >= 900px) {
+                        display: none;
+                    }
+                }
+
+                .cards-arrow {
+                    z-index: 1;
+                    display: none;
+                    grid-area: 1 / 1;
+                    align-items: center;
+                    align-self: center;
+                    justify-content: center;
+                    width: var(--space-6);
+                    height: var(--space-6);
+                    border: 0;
+                    padding: 0;
+                    background: none;
+                    color: inherit;
+                    cursor: pointer;
+
+                    /* the mobile capture shows the dots only; the arrows from tablet */
+                    @media (width >= 600px) {
+                        display: flex;
+                    }
+
+                    /* an end of the carousel, no loop: dimmed as in blocks/carousel */
+                    &[aria-disabled='true'] {
+                        cursor: default;
+                        opacity: 0.3;
+                    }
+
+                    svg {
+                        width: var(--space-3);
+                        height: var(--space-3);
+                    }
+                }
+
+                .cards-prev {
+                    justify-self: start;
+
+                    svg {
+                        transform: scaleX(-1);
+                    }
+                }
+
+                .cards-next {
+                    justify-self: end;
+                }
+
+                .cards-dots {
+                    display: flex;
+                    grid-row: 2;
+                    justify-content: center;
+                    gap: var(--space-2);
+                    margin: 0;
+                    padding: 0 0 var(--space-3);
+                    list-style: none;
+                }
+
+                .cards-dot {
+                    display: block;
+                    width: var(--space-3);
+                    height: var(--space-3);
+                    border: 0;
+                    padding: 0;
+                    background: none;
+                    color: inherit;
+                    cursor: pointer;
+
+                    /* ~10px dot measured on the mobile and tablet captures; the button keeps a 24px target */
+                    &::before {
+                        content: "";
+                        display: block;
+                        width: 10px;
+                        height: 10px;
+                        margin: auto;
+                        border-radius: var(--radius-round);
+                        background-color: currentcolor;
+                        opacity: 0.2;
+                    }
+
+                    &[aria-current='true']::before {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    /* ── dark section: default and no-image cards are light surfaces (career services, DH-07) ── */
+    &.dark {
+        .cards-wrapper {
+            > .cards:not(.stats, .numbered, .steps, .overlay, .profile, .program) {
+                gap: var(--space-6) var(--space-4);
+
+                .cards-card {
+                    gap: 0;
+                    background-color: var(--background-color);
+                    color: var(--text-color);
+                }
+
+                .cards-card-body {
+                    padding: var(--space-4);
+                }
+
+                :is(.cards-card-text, .cards-card-actions) a:any-link:not(.button) {
+                    color: var(--link-color);
+                }
+
+                a.button.primary {
+                    background-color: var(--brand-primary);
+                    color: var(--text-on-dark);
+                }
+
+                a.button.secondary {
+                    box-shadow: var(--shadow-outline);
+                    color: var(--text-color);
+                }
+            }
+        }
+    }
+
+    /* ── light or highlight section: program cards turn white over the grey band ── */
+    &:is(.light, .highlight) {
+        .cards-wrapper {
+            > .cards.program {
+                .cards-card {
+                    background-color: var(--background-color);
+                }
+            }
+        }
+    }
 }

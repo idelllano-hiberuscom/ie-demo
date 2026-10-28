@@ -9,6 +9,7 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Cards",
+              "model": "cards",
               "filter": "cards"
             }
           }
@@ -33,21 +34,151 @@
   ],
   "models": [
     {
+      "id": "cards",
+      "fields": [
+        {
+          "component": "multiselect",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Variante",
+          "description": "Presentación de las tarjetas. Elige una sola; sin variante, rejilla de imagen, título y texto.",
+          "options": [
+            {
+              "name": "Sin imagen",
+              "value": "no-image"
+            },
+            {
+              "name": "Cifras",
+              "value": "stats"
+            },
+            {
+              "name": "Numeradas",
+              "value": "numbered"
+            },
+            {
+              "name": "Pasos",
+              "value": "steps"
+            },
+            {
+              "name": "Teselas que se despliegan",
+              "value": "overlay"
+            },
+            {
+              "name": "Perfiles",
+              "value": "profile"
+            },
+            {
+              "name": "Programas",
+              "value": "program"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "card",
       "fields": [
         {
           "component": "reference",
           "valueType": "string",
           "name": "image",
-          "label": "Image",
+          "label": "Imagen",
           "multi": false
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Texto alternativo de la imagen",
+          "description": "Describe la imagen. Déjalo vacío solo si es decorativa."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "label": "Título",
+          "description": "Título de la tarjeta. En cifras, el número (escribe «m²» si lo lleva); en perfiles, el nombre."
+        },
+        {
           "component": "richtext",
+          "valueType": "string",
           "name": "text",
-          "value": "",
-          "label": "Text",
-          "valueType": "string"
+          "label": "Texto",
+          "description": "Descripción de la tarjeta. En cifras, la etiqueta; en perfiles, la cita."
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "link",
+          "label": "Enlace"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "linkText",
+          "label": "Texto del enlace"
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "link2",
+          "label": "Segundo enlace",
+          "description": "En programas, déjalo vacío y escribe solo el texto: enlaza al formulario de la página (#form)."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "link2Text",
+          "label": "Texto del segundo enlace"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "duration",
+          "label": "Duración",
+          "description": "Solo en programas."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "language",
+          "label": "Idioma",
+          "description": "Solo en programas."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "location",
+          "label": "Ubicación",
+          "description": "Solo en programas."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "intake",
+          "label": "Inicio",
+          "description": "Solo en programas."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "schedule",
+          "label": "Jornada",
+          "description": "Solo en programas."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "format",
+          "label": "Formato",
+          "description": "Solo en programas."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "category",
+          "label": "Categoría",
+          "description": "Solo en programas. Las categorías distintas se pintan como pestañas de filtro; una tarjeta sin categoría aparece en todas."
         }
       ]
     }
