@@ -22,6 +22,7 @@
       "fields": [
         {
           "component": "aem-content",
+          "valueType": "string",
           "name": "reference",
           "label": "Reference"
         }
