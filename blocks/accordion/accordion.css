@@ -165,6 +165,7 @@
                 }
 
                 .accordion-item-download {
+                    min-width: var(--button-min-width);
                     padding: 0 var(--space-3);
                     font-size: var(--body-font-size-xs);
                     transition: background-color 0.33s, color 0.33s;

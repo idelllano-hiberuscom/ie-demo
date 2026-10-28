@@ -307,7 +307,7 @@
 
                     a.button:any-link {
                         width: auto;
-                        min-width: 224px; /* CTA of the panel measured on the portal (computed-styles, overlay) */
+                        min-width: var(--button-min-width);
                     }
                 }
             }
@@ -729,14 +729,10 @@
 
                 .cards-card-title p {
                     font-family: var(--heading-font-family);
-                    font-size: 64px; /* divergencia deliberada: cifra de stats sin token, medida en la captura móvil (contrato §2); el token va al paquete de reapertura del Gate 1 */
+                    font-size: var(--display-font-size);
                     font-weight: var(--font-weight-heavy);
                     line-height: 1;
                     text-transform: var(--heading-text-transform);
-
-                    @media (width >= 900px) {
-                        font-size: 90px; /* divergencia deliberada: 90px medidos en el portal; el token --display-font-size va al paquete de reapertura del Gate 1 */
-                    }
                 }
 
                 .cards-card-text {

@@ -40,7 +40,7 @@
             pointer-events: auto;
 
             @media (width >= 600px) {
-                box-shadow: var(--shadow-card);
+                box-shadow: var(--shadow-raised);
             }
 
             @media (width >= 900px) {
@@ -57,7 +57,7 @@
                 border: var(--border-width) solid var(--border-color-strong);
                 padding: 0 var(--space-3);
                 background-color: var(--background-color);
-                box-shadow: var(--shadow-card);
+                box-shadow: var(--shadow-raised);
                 color: var(--text-color);
                 font-family: var(--heading-font-family);
                 font-size: var(--body-font-size-xxs);
@@ -152,7 +152,7 @@
                     min-height: var(--button-height);
                     padding: 0 var(--space-3);
                     background-color: var(--background-color);
-                    box-shadow: var(--shadow-card);
+                    box-shadow: var(--shadow-raised);
                     color: var(--text-color);
                     font-family: var(--heading-font-family);
                     font-size: var(--body-font-size-xxs);

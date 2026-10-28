@@ -24,6 +24,21 @@
     --border-color-strong: #0f0f0f;
     --overlay-color: rgb(0 0 0 / 50%);
 
+    /* states and secondary colours (section 7, approved after development) */
+    --link-hover-color: #5c7db6;
+    --link-hover-color-on-dark: #809fb7;
+    --link-color-secondary: #06c;
+    --error-color: #bf0000;
+    --button-active-color: #232323;
+    --focus-ring-color: #eb7974;
+    --focus-ring-width: 5px;
+
+    /* social network colours (section 7) */
+    --color-facebook: #39579a;
+    --color-x: #000;
+    --color-linkedin: #013f70;
+    --color-whatsapp: #41b700;
+
     /* section styles (DH-07) */
     --section-dark-background: var(--brand-primary);
     --section-dark-color: var(--text-on-dark);
@@ -52,6 +67,12 @@
     --body-font-size-xs: 13px;
     --body-font-size-xxs: 11px;
 
+    /* display and navigation sizes (section 7) */
+    --display-font-size: 64px;
+    --nav-font-size-m: 14px;
+    --nav-font-size-s: 12px;
+    --nav-font-size-xs: 9px;
+
     /* spacing (8px step) */
     --space-1: 8px;
     --space-2: 16px;
@@ -68,11 +89,13 @@
     --radius-round: 50%;
     --shadow-outline: inset 0 0 0 1px #0f0f0f;
     --shadow-card: 0 6px 7px 0 rgb(0 0 0 / 8%);
+    --shadow-raised: 0 2px 3px 0 rgb(0 0 0 / 30%);
 
     /* dimensions */
     --content-max-width: 1224px;
     --container-max-width: 1680px;
     --button-height: 56px;
+    --button-min-width: 224px;
     --icon-size: 16px;
     --card-image-ratio: 3 / 2;
     --hero-min-height: 640px;
@@ -80,7 +103,6 @@
     /* boilerplate legacy, still read by header/footer/buttons: pending decision (contract §10) */
     --light-color: #f8f8f8;
     --dark-color: #505050;
-    --link-hover-color: #1d3ecf;
     --heading-font-size-m: 27px;
     --heading-font-size-xs: 22px;
 
@@ -134,6 +156,9 @@
         /* boilerplate legacy (unchanged) */
         --heading-font-size-m: 22px;
         --heading-font-size-xs: 18px;
+
+        /* display size (section 7) */
+        --display-font-size: 90px;
 
         /* EDS-COMP-003: top bar (56px) + main bar (131px) */
         --nav-height: 187px;
@@ -260,6 +285,17 @@ a:any-link {
 
 a:hover {
     text-decoration: underline;
+}
+
+/* :where() keeps (0,1,1): buttons and the link colours set by blocks keep winning on hover */
+a:where(:not(.button)):hover {
+    color: var(--link-hover-color);
+}
+
+/* blocks that paint their own focus keep it: their selectors outrank this one */
+a:focus-visible,
+button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
 }
 
 /* links inside running text: --link-color is 1.08:1 against --text-color, so colour alone is not enough (WCAG 1.4.1) */
@@ -390,6 +426,10 @@ main .section.dark {
 
 main .section.dark a:any-link:not(.button) {
     color: var(--section-dark-color);
+}
+
+main .section.dark a:any-link:not(.button):hover {
+    color: var(--link-hover-color-on-dark);
 }
 
 /* light variant of the solid button, as measured on the portal's dark band */

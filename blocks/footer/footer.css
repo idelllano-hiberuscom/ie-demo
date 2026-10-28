@@ -1,7 +1,5 @@
 footer {
     .footer {
-        /* Nota [EDS-COMP-004]: hover (#809FB7) y foco (outline #EB7974) del portal pendientes de
-           tokens nuevos (reapertura del Gate 1 al final de la tanda); el foco usa el del navegador. */
         background-color: var(--brand-primary);
 
         .section {
@@ -24,6 +22,10 @@ footer {
 
                 a:any-link {
                     color: var(--section-dark-color);
+
+                    &:hover {
+                        color: var(--link-hover-color-on-dark);
+                    }
                 }
             }
 

@@ -18,8 +18,8 @@
  */
 
 // [EDS-COMP-010] Hover and active of the PDF link are not in the evidence (contract §7) and
-// are not invented: by orchestrator decision the link keeps the global a:hover underline and
-// the browser focus indicator, as the hero CTA does. Closes the contract §7 TODO.
+// are not invented: by orchestrator decision the link keeps the global a:hover (underline and
+// --link-hover-color) and the global focus ring, as the hero CTA does. Closes the contract §7 TODO.
 
 import { toCamelCase } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';

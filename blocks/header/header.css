@@ -273,7 +273,7 @@ header {
             width: 100%;
             padding: var(--space-3) 0;
             border-bottom: var(--border-width) solid currentcolor;
-            font-size: 14px;
+            font-size: var(--nav-font-size-m);
             line-height: calc(20 / 14);
             text-transform: var(--heading-text-transform);
 
@@ -358,7 +358,7 @@ header {
                 padding-inline: var(--space-1);
                 background-color: color-mix(in srgb, var(--brand-primary) 85%, var(--text-color));
                 font-family: var(--body-font-family);
-                font-size: 12px;
+                font-size: var(--nav-font-size-s);
                 font-weight: var(--font-weight-regular);
 
                 @media (width >= 900px) {
@@ -418,7 +418,7 @@ header {
             > a,
             > .nav-sub-toggle {
                 display: block;
-                font-size: 14px;
+                font-size: var(--nav-font-size-m);
                 font-weight: var(--heading-font-weight-regular);
                 line-height: calc(18 / 14);
                 text-transform: var(--heading-text-transform);
@@ -515,7 +515,7 @@ header {
             margin-top: calc(var(--space-6) + var(--space-1));
             padding-bottom: var(--space-3);
             border-bottom: var(--border-width) solid currentcolor;
-            font-size: 14px;
+            font-size: var(--nav-font-size-m);
             line-height: calc(20 / 14);
             text-transform: var(--heading-text-transform);
 
@@ -654,7 +654,7 @@ header {
             display: flex;
             flex-direction: column;
             gap: var(--space-1);
-            font-size: 9px;
+            font-size: var(--nav-font-size-xs);
             font-weight: var(--heading-font-weight-regular);
             line-height: calc(22 / 9);
             text-transform: var(--heading-text-transform);
@@ -689,7 +689,7 @@ header {
 
         .nav-search-label {
             font-family: var(--body-font-family);
-            font-size: 12px;
+            font-size: var(--nav-font-size-s);
             font-weight: var(--font-weight-regular);
             font-style: italic;
         }
@@ -712,7 +712,7 @@ header {
         .nav-lang {
             display: flex;
             gap: var(--space-2);
-            font-size: 9px;
+            font-size: var(--nav-font-size-xs);
             font-weight: var(--heading-font-weight-regular);
             line-height: calc(14 / 9);
             text-transform: var(--heading-text-transform);
@@ -821,7 +821,7 @@ header {
             }
 
             .nav-hamburger-label {
-                font-size: 9px;
+                font-size: var(--nav-font-size-xs);
                 line-height: 1.2;
                 text-transform: var(--heading-text-transform);
 

@@ -17,7 +17,7 @@
  */
 
 // Note [EDS-COMP-005]: CTA hover and active states are not extracted (contract §7) and are
-// not invented (orchestrator decision); focus keeps the browser's visible indicator.
+// not invented (orchestrator decision); focus is the global ring of styles.css (EDS-FIX-002).
 
 import { decorateIcons, toCamelCase } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';

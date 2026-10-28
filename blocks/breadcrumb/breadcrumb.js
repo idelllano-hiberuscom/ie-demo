@@ -36,9 +36,8 @@
  * authored in the same section as the hero, right after it, the trail overlays the bottom of
  * the hero, in white. That is CSS only (breadcrumb.css); anywhere else it renders on its own.
  *
- * Hover of the level links: the portal uses #5C7DB6, which needs a new global token. It waits
- * for Gate 1 to reopen (closes the former blocking TODO 2); meanwhile the global hover applies
- * and focus keeps the browser's visible indicator.
+ * Hover of the level links: the portal colour, as the global token --link-hover-color
+ * (EDS-FIX-002, also over the hero); focus is the global ring of styles.css.
  */
 
 import { moveInstrumentation } from '../../scripts/scripts.js';
