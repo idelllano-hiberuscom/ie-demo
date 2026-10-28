@@ -6,8 +6,12 @@ footer {
             padding: var(--space-3) var(--space-2);
             background-color: var(--background-color);
 
-            @media (width >= 600px) {
-                padding: var(--space-4) var(--space-6);
+            @media (width >= 768px) {
+                padding: var(--space-4) 56px; /* 1:1 portal */
+            }
+
+            @media (width >= 1024px) {
+                padding-inline: 7.5%; /* 1:1 portal: 108px at 1440px */
             }
 
             > div {
@@ -45,27 +49,32 @@ footer {
 
                 ul {
                     display: grid;
-                    gap: var(--space-4) var(--space-3);
+                    gap: var(--space-3); /* 1:1 portal: 23px rows, 47px pitch */
                     margin: 0;
                     padding: 0;
                     list-style: none;
 
-                    @media (width >= 900px) {
+                    @media (width >= 1024px) {
                         grid-template-columns: repeat(2, 1fr);
                         width: 70%;
                     }
 
                     li {
-                        display: flex;
+                        height: 23.03px; /* 1:1 portal: 23.03px items, 47px pitch */
+                        line-height: 22.4px;
                     }
                 }
 
                 a:any-link {
                     font-family: var(--heading-font-family);
-                    font-size: var(--body-font-size-xxs);
+                    font-size: 10px; /* 1:1 portal: 10px on mobile */
                     font-weight: var(--font-weight-heavy);
                     line-height: calc(16 / 11);
                     text-transform: var(--heading-text-transform);
+
+                    @media (width >= 768px) {
+                        font-size: var(--body-font-size-xxs);
+                    }
 
                     &::after {
                         content: '';
@@ -84,11 +93,11 @@ footer {
                 /* the portal reserves an empty title slot above the cards: section padding + that slot */
                 padding-top: calc(var(--space-3) + var(--space-4));
 
-                @media (width >= 600px) {
+                @media (width >= 768px) {
                     padding-top: calc(var(--space-4) + var(--space-6));
                 }
 
-                @media (width >= 900px) {
+                @media (width >= 1024px) {
                     padding-top: calc(var(--space-4) + var(--space-8));
                 }
 
@@ -103,11 +112,11 @@ footer {
                     li {
                         flex: 1 1 100%;
 
-                        @media (width >= 600px) {
+                        @media (width >= 768px) {
                             flex-basis: calc((100% - var(--space-2)) / 2);
                         }
 
-                        @media (width >= 900px) {
+                        @media (width >= 1024px) {
                             flex-basis: 0;
                         }
                     }
@@ -165,7 +174,7 @@ footer {
                     display: grid;
                     justify-items: start;
 
-                    @media (width >= 900px) {
+                    @media (width >= 1024px) {
                         grid-template-columns: auto 1fr auto;
                         grid-template-areas:
                             'legal legal logo'
@@ -182,7 +191,11 @@ footer {
                     padding: 0;
                     list-style: none;
 
-                    @media (width >= 900px) {
+                    @media (width >= 768px) {
+                        padding-right: var(--space-6); /* 1:1 portal */
+                    }
+
+                    @media (width >= 1024px) {
                         grid-area: legal;
                     }
 
@@ -190,7 +203,7 @@ footer {
                         display: flex;
                         align-items: center;
                         font-size: var(--body-font-size-xs);
-                        line-height: calc(24 / 13);
+                        line-height: 24.84px; /* 1:1 portal: inline-block items 24.84px tall */
 
                         &::after {
                             content: '';
@@ -216,9 +229,13 @@ footer {
                     padding: 0;
                     list-style: none;
 
-                    @media (width >= 900px) {
+                    @media (width >= 1024px) {
                         grid-area: social;
                         margin-top: 0;
+                    }
+
+                    li {
+                        height: 30.39px; /* 1:1 portal: items 30.39px tall under a 24px icon */
                     }
 
                     a:any-link {
@@ -240,7 +257,7 @@ footer {
                     font-size: var(--body-font-size-xs);
                     line-height: calc(20 / 13);
 
-                    @media (width >= 900px) {
+                    @media (width >= 1024px) {
                         grid-area: copyright;
                         margin-top: 0;
                     }
@@ -248,8 +265,9 @@ footer {
 
                 .footer-logo {
                     margin: var(--space-3) 0 0;
+                    padding-bottom: 7px; /* 1:1 portal: the inline svg leaves 7px under the logo */
 
-                    @media (width >= 900px) {
+                    @media (width >= 1024px) {
                         grid-area: logo;
                         align-self: end;
                         margin-top: 0;
@@ -260,7 +278,7 @@ footer {
                         width: 70px;
                         height: auto;
 
-                        @media (width >= 600px) {
+                        @media (width >= 768px) {
                             width: 88px;
                         }
                     }

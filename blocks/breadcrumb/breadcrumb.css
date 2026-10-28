@@ -114,17 +114,13 @@
         }
     }
 
-    /* the video hero has its pause button in that corner: the trail leaves room and lets it be clicked */
+    /* 1:1 portal: over the video hero the trail sits 64px above the bottom edge (its pause button is hidden) */
     &.hero-container .hero-wrapper:has(.hero.video) + .breadcrumb-wrapper {
-        pointer-events: none;
+        margin-block-start: calc(-1 * (var(--body-font-size-xs) * 20 / 13 + 64px));
+        padding-block-end: 64px;
 
-        ol {
-            max-width: calc(100% - var(--space-6) - var(--space-1));
-            pointer-events: auto;
-
-            @media (width >= 600px) {
-                max-width: calc(100% - 2 * (var(--space-6) + var(--space-3)));
-            }
+        @media (width < 768px) {
+            padding-inline: 14px; /* 1:1 portal: the trail starts at 15px and fits in one line */
         }
     }
 }

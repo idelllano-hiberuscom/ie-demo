@@ -369,7 +369,15 @@ function decorateEntry(nav, entry, labels) {
   utils.className = 'nav-utils';
   sublist.classList.add('nav-subs');
   [...sublist.children].forEach((item) => {
-    if (item.querySelector(':scope > em > a')) {
+    // Universal Editor wraps each item in a paragraph: its content is read as if it were bare
+    item.querySelectorAll(':scope > p').forEach((paragraph) => {
+      paragraph.before(...paragraph.childNodes);
+      paragraph.remove();
+    });
+    // the "Go to … page" link (em > a) arrives turned into a button by decorateButtons
+    const isGoto = item.querySelector(':scope > a.button.secondary');
+    item.querySelector(':scope > a.button')?.classList.remove('button', 'primary', 'secondary');
+    if (isGoto || item.querySelector(':scope > em > a')) {
       goto.append(item);
     } else if (item.querySelector(':scope > img, :scope > picture, :scope > .icon')) {
       decorateUtil(item);

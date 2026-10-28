@@ -53,6 +53,14 @@ const NETWORKS = [
   { id: 'whatsapp', url: ({ url, title }) => `https://api.whatsapp.com/send?text=${title}%20${url}` },
 ];
 
+/** Visible network names of the publication bar (1:1 portal: the X link still reads "Twitter"). */
+const NETWORK_NAMES = {
+  facebook: 'Facebook',
+  x: 'Twitter',
+  linkedin: 'LinkedIn',
+  whatsapp: 'WhatsApp',
+};
+
 /** "Add as preferred source on Google", outside the list of networks as on the portal. */
 const PREFERRED_SOURCE = {
   id: 'google',
@@ -242,7 +250,12 @@ export default function decorate(block) {
   const list = document.createElement('ul');
   NETWORKS.forEach((network) => {
     const item = document.createElement('li');
-    item.append(buildLink(network, page, `${network.id}${iconSuffix}`));
+    const link = buildLink(network, page, `${network.id}${iconSuffix}`);
+    const name = document.createElement('span');
+    name.className = 'share-name';
+    name.textContent = NETWORK_NAMES[network.id];
+    link.append(name);
+    item.append(link);
     list.append(item);
   });
 

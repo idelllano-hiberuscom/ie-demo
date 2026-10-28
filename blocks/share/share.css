@@ -15,19 +15,29 @@
         @media (width >= 600px) {
             flex-direction: row;
             justify-content: center;
-            gap: var(--space-3);
+            gap: var(--space-2); /* 1:1 portal: 16px on tablet */
         }
 
-        @media (width >= 900px) {
+        @media (width >= 1024px) {
+            gap: var(--space-3);
             padding-block: var(--space-4);
         }
 
         .share-label {
+            height: 7px; /* 1:1 portal: the label box is 7px tall */
             font-family: var(--heading-font-family);
             font-size: var(--body-font-size-xxs);
             font-weight: var(--font-weight-heavy);
-            line-height: calc(16 / 11);
+            line-height: 7px;
             text-transform: var(--heading-text-transform);
+
+            @media (width < 600px) {
+                margin-bottom: var(--space-1); /* 1:1 portal: 16px down to the icons on mobile */
+            }
+
+            @media (600px <= width < 1024px) {
+                margin-right: var(--space-1); /* 1:1 portal: 24px after the label on tablet */
+            }
 
             /* the label is the authored row (div > div > p): its paragraph adds no space */
             p {
@@ -47,7 +57,7 @@
             padding: 0;
             list-style: none;
 
-            @media (width >= 900px) {
+            @media (width >= 1024px) {
                 gap: var(--space-3);
             }
 
@@ -64,6 +74,11 @@
             .icon {
                 width: 32px;
                 height: 32px;
+            }
+
+            /* visible names: publication bar only */
+            .share-name {
+                display: none;
             }
         }
 
@@ -106,8 +121,14 @@
             }
 
             .share-label {
+                height: auto;
                 color: var(--text-muted);
                 font-weight: var(--heading-font-weight-regular);
+                line-height: calc(16 / 11);
+
+                @media (width < 600px) {
+                    margin-bottom: 0;
+                }
             }
 
             .share-link {
@@ -162,6 +183,44 @@
                     width: 18px;
                     height: 18px;
                 }
+            }
+        }
+
+        /* ── publication: square boxes, monochrome icons and the network name from 768px (1:1 portal) ── */
+        .publication-detail-container &.compact {
+            justify-content: flex-start;
+
+            @media (width >= 768px) {
+                justify-content: flex-end;
+            }
+
+            ul .share-link {
+                gap: var(--space-2);
+                width: auto;
+                height: 38px;
+                border-radius: 0;
+                padding: var(--space-1) var(--space-2);
+
+                .icon img {
+                    filter: brightness(0);
+                }
+
+                .share-name {
+                    display: none;
+                    font-family: var(--heading-font-family);
+                    font-size: var(--body-font-size-xxs);
+                    font-weight: var(--font-weight-heavy);
+                    line-height: calc(16 / 11);
+                    text-transform: var(--heading-text-transform);
+
+                    @media (width >= 768px) {
+                        display: block;
+                    }
+                }
+            }
+
+            .share-source {
+                border-radius: 0;
             }
         }
     }
