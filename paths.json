@@ -1,0 +1,11 @@
+{
+  "mappings": [
+    "/content/ie-demo/:/",
+    "/content/ie-demo/configuration:/.helix/config.json",
+    "/content/ie-demo/headers:/.helix/headers.json",
+    "/content/ie-demo/metadata:/metadata.json"
+  ],
+  "includes": [
+    "/content/ie-demo/"
+  ]
+}
