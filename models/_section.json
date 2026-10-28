@@ -62,7 +62,8 @@
         "accordion",
         "carousel",
         "breadcrumb",
-        "form"
+        "form",
+        "share"
       ]
     }
   ]
