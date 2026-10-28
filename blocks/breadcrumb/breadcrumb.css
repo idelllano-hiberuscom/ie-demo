@@ -1,0 +1,125 @@
+.breadcrumb-container {
+    .breadcrumb {
+        nav {
+            font-size: var(--body-font-size-xs);
+            font-weight: var(--font-weight-semibold);
+            line-height: calc(20 / 13);
+            text-transform: capitalize;
+        }
+
+        /* inline-flex so the section alignment (centered style) places the trail */
+        ol {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            vertical-align: top;
+            white-space: nowrap;
+
+            li {
+                display: flex;
+                flex: none;
+                align-items: center;
+
+                /* navigation, not running text: no underline (overrides main li a:any-link) */
+                a:any-link {
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                &:not(:last-child) > a,
+                &:not(:last-child) > span {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: var(--space-1);
+
+                    /* separator: decorative pseudo-element, outside the accessibility tree */
+                    &::after {
+                        content: "";
+                        flex: none;
+                        width: var(--icon-size);
+                        height: var(--icon-size);
+                        background-color: currentcolor;
+                        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.5 3.5 10 8l-4.5 4.5' fill='none' stroke='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+                    }
+                }
+
+                /* ── collapsed: below 900px the intermediate levels fold into an ellipsis ── */
+                &:nth-child(2):not(:last-child) > a,
+                &:nth-child(2):not(:last-child) > span {
+                    gap: 0;
+                    font-size: 0;
+
+                    @media (width >= 900px) {
+                        gap: var(--space-1);
+                        font-size: inherit;
+                    }
+
+                    /* the label stays in the link as its accessible name; only the ellipsis is drawn */
+                    &::before {
+                        content: "…";
+                        content: "…" / "";
+                        padding-inline-end: var(--space-1);
+                        font-size: var(--body-font-size-xs);
+
+                        @media (width >= 900px) {
+                            content: none;
+                        }
+                    }
+                }
+
+                &:nth-child(n + 3):not(:last-child) {
+                    display: none;
+
+                    @media (width >= 900px) {
+                        display: flex;
+                    }
+                }
+
+                /* ── current page ── */
+                &:last-child {
+                    display: block;
+                    flex: 0 1 auto;
+                    min-width: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+
+    /* same section as the hero, right after it: the trail overlays the bottom of the hero */
+    &.hero-container .hero-wrapper + .breadcrumb-wrapper {
+        position: relative;
+        margin-block-start: calc(-1 * (var(--body-font-size-xs) * 20 / 13 + var(--space-3)));
+        padding-block-end: var(--space-3);
+        color: var(--text-on-dark);
+
+        @media (width >= 600px) {
+            text-align: center;
+        }
+
+        a:any-link {
+            color: inherit;
+        }
+    }
+
+    /* the video hero has its pause button in that corner: the trail leaves room and lets it be clicked */
+    &.hero-container .hero-wrapper:has(.hero.video) + .breadcrumb-wrapper {
+        pointer-events: none;
+
+        ol {
+            max-width: calc(100% - var(--space-6) - var(--space-1));
+            pointer-events: auto;
+
+            @media (width >= 600px) {
+                max-width: calc(100% - 2 * (var(--space-6) + var(--space-3)));
+            }
+        }
+    }
+}

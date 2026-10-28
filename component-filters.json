@@ -16,13 +16,20 @@
       "cards",
       "columns",
       "fragment",
-      "accordion"
+      "accordion",
+      "breadcrumb"
     ]
   },
   {
     "id": "accordion",
     "components": [
       "accordion-item"
+    ]
+  },
+  {
+    "id": "breadcrumb",
+    "components": [
+      "breadcrumb-item"
     ]
   },
   {
