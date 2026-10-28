@@ -12,12 +12,23 @@
         justify-content: center;
         box-sizing: border-box;
         min-height: 90svh;
-        padding: var(--space-6) var(--space-2);
+        padding: 40px var(--space-2) 57px; /* 1:1 portal (mobile): content centre line */
         background-color: var(--text-color);
         color: var(--text-on-dark);
 
         @media (width >= 600px) {
             min-height: var(--hero-min-height);
+            padding-inline: var(--space-4);
+        }
+
+        /* 1:1 portal: content centred above the 44px breadcrumb band, 56px side gutter */
+        @media (width >= 768px) {
+            padding: 64px 56px 48px;
+        }
+
+        /* 1:1 portal: same centre line as the portal's desktop hero */
+        @media (width >= 1024px) {
+            padding-top: 104px;
             padding-inline: var(--space-4);
         }
 
@@ -74,7 +85,7 @@
             position: absolute;
             inset-block-end: var(--space-3);
             inset-inline-end: max(var(--space-2), (100% - var(--content-max-width)) / 2);
-            display: flex;
+            display: none; /* 1:1 portal: the portal shows no pause control over the video */
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
@@ -108,12 +119,13 @@
         .hero-content {
             display: flex;
             flex-direction: column;
-            gap: var(--space-4);
+            gap: 16px; /* 1:1 portal (mobile) */
             width: 100%;
             max-width: var(--content-max-width);
             margin-inline: auto;
 
             @media (width >= 600px) {
+                gap: var(--space-4);
                 text-align: center;
             }
 
@@ -123,9 +135,13 @@
                 margin: 0;
             }
 
-            .hero-title h2 {
+            .hero-title :is(h1, h2) {
                 font-size: var(--heading-font-size-xxl);
-                line-height: calc(55 / 50);
+                line-height: 36px; /* 1:1 portal (mobile, 30px title) */
+
+                @media (width >= 600px) {
+                    line-height: 55px; /* 1:1 portal */
+                }
             }
 
             .hero-text {
@@ -148,12 +164,13 @@
                 display: flex;
                 flex-direction: column;
                 gap: var(--space-2);
-                padding-top: var(--space-4);
+                padding: 24px 0 16px; /* 1:1 portal (mobile): the bottom space is the portal's empty spacing under the CTAs */
 
                 @media (width >= 600px) {
                     flex-direction: row;
                     justify-content: center;
                     gap: var(--space-3);
+                    padding-block: var(--space-4) 56px; /* 1:1 portal: 32px padding + 24px margin under the CTAs */
                 }
 
                 > div {
@@ -164,16 +181,38 @@
 
                 a.button {
                     width: 100%;
-                    min-height: 48px; /* divergencia deliberada: el CTA del hero mide 48px y --button-height 56px, ver contrato §4 */
+                    min-height: 48px; /* 1:1 portal: the hero CTA is 48px high */
                     background-color: var(--background-color);
                     color: var(--text-color);
                     white-space: normal;
+
+                    /* 1:1 portal: external-link icon after the label */
+                    &::after {
+                        content: "";
+                        flex: none;
+                        width: 24px;
+                        height: 24px;
+                        margin-inline-start: 8px;
+                        background-color: currentcolor;
+                        mask: url("../../icons/external-link.svg") center / contain no-repeat;
+                    }
                 }
             }
         }
 
         /* ── video ── */
         &.video {
+            background-color: #000; /* 1:1 portal: black behind the letterboxed video */
+
+            @media (width >= 768px) {
+                min-height: 90vh; /* 1:1 portal: 922px on a 1024px-high tablet */
+                padding-top: 46px; /* 1:1 portal: the title sits on the centre line of the band */
+            }
+
+            @media (width >= 1024px) {
+                min-height: 702px; /* 1:1 portal */
+            }
+
             .hero-content {
                 @media (width >= 600px) {
                     text-align: start;
@@ -205,15 +244,41 @@
             }
 
             .hero-content {
+                gap: 0;
                 max-width: none;
 
                 @media (width >= 600px) {
                     text-align: start;
                 }
 
+                /* 1:1 portal: the portal title box is shorter than its line, so it rides up into the padding */
+                > div:first-child h2 {
+                    margin-block-start: -4px;
+                    line-height: 30px;
+
+                    @media (width >= 600px) {
+                        line-height: 42px;
+                    }
+
+                    @media (width >= 768px) {
+                        margin-block-start: -7px;
+                    }
+                }
+
                 .hero-text {
+                    margin-block-start: 18px; /* 1:1 portal */
+                    line-height: 22px; /* 1:1 portal (mobile) */
+
+                    @media (width >= 600px) {
+                        line-height: 28px;
+                    }
+
+                    @media (width >= 768px) {
+                        margin-block-start: 14px;
+                    }
+
                     > div {
-                        gap: var(--space-2);
+                        gap: 1em; /* 1:1 portal: paragraph margin 15px / 18px */
                     }
 
                     p {
@@ -222,10 +287,15 @@
                 }
 
                 .hero-actions {
-                    padding-top: 0;
+                    margin-block-start: 25px; /* 1:1 portal */
+                    padding: 0;
 
                     @media (width >= 600px) {
                         justify-content: flex-start;
+                    }
+
+                    @media (width >= 768px) {
+                        margin-block-start: 23px;
                     }
 
                     > div {
