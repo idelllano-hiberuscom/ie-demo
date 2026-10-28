@@ -1,0 +1,221 @@
+.sticky-cta-container {
+    .sticky-cta {
+        position: fixed;
+        inset-inline: 0;
+        bottom: 0;
+        z-index: 9;
+
+        /* the bar box only frames its children: the page under its empty part stays clickable */
+        pointer-events: none;
+
+        /* entrance when the JS shows the bar (about 4 s after loading): rises and fades in */
+        @media (prefers-reduced-motion: no-preference) {
+            animation: sticky-cta-rise 0.3s ease;
+        }
+
+        @media (width >= 600px) {
+            display: flex;
+            inset-inline: 0 auto;
+
+            /* clips only the left edge, where the CTAs hide while folded; shadows still show */
+            clip-path: inset(calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) 0);
+        }
+
+        @media (width >= 900px) {
+            inset-inline: calc(var(--space-4) + var(--space-1)) auto;
+            bottom: var(--space-2);
+        }
+
+        /* not shown yet: not rendered (hidden attribute until the JS shows the bar) */
+        &[hidden] {
+            display: none;
+        }
+
+        .sticky-cta-bar {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            padding: var(--space-2);
+            background-color: var(--background-color);
+            pointer-events: auto;
+
+            @media (width >= 600px) {
+                box-shadow: var(--shadow-card);
+            }
+
+            @media (width >= 900px) {
+                padding: var(--space-1);
+            }
+
+            .sticky-cta-toggle {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                justify-content: center;
+                gap: var(--space-1);
+                min-height: var(--space-4);
+                border: var(--border-width) solid var(--border-color-strong);
+                padding: 0 var(--space-3);
+                background-color: var(--background-color);
+                box-shadow: var(--shadow-card);
+                color: var(--text-color);
+                font-family: var(--heading-font-family);
+                font-size: var(--body-font-size-xxs);
+                font-weight: var(--font-weight-heavy);
+                line-height: calc(16 / 11);
+                text-transform: var(--heading-text-transform);
+                cursor: pointer;
+
+                @media (width >= 600px) {
+                    flex: none;
+                    min-width: 284px;
+                    min-height: var(--button-height);
+                }
+
+                @media (width >= 900px) {
+                    min-width: 178px;
+                }
+
+                &:focus-visible {
+                    outline: calc(2 * var(--border-width)) solid var(--brand-primary);
+                    outline-offset: calc(2 * var(--border-width));
+                }
+
+                .sticky-cta-icon {
+                    flex: none;
+                    width: var(--icon-size);
+                    height: var(--icon-size);
+                    background:
+                        linear-gradient(var(--brand-primary) 0 0) center / 10px var(--border-width) no-repeat,
+                        linear-gradient(var(--brand-primary) 0 0) center / var(--border-width) 10px no-repeat;
+                }
+            }
+        }
+
+        .sticky-cta-actions {
+            position: absolute;
+            inset-inline: 0;
+            bottom: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: var(--space-1);
+            margin: 0;
+            padding: var(--space-1) var(--space-2);
+            list-style: none;
+            background-color: var(--background-alt);
+            pointer-events: auto;
+
+            /* unfolding: rises from behind the bar (mobile) or slides out of it (tablet, desktop) */
+            @media (prefers-reduced-motion: no-preference) {
+                animation: sticky-cta-rise 0.3s ease;
+
+                /* folding: display waits for the slide back before the list stops rendering */
+                transition: display 0.3s allow-discrete;
+            }
+
+            @media (width >= 600px) {
+                position: static;
+                flex-direction: row;
+                gap: 0;
+                padding: 0;
+                background-color: transparent;
+                animation-name: sticky-cta-slide-out;
+            }
+
+            /* folded: not rendered (hidden attribute) */
+            &[hidden] {
+                display: none;
+                animation-name: sticky-cta-sink;
+                animation-fill-mode: forwards;
+
+                @media (width >= 600px) {
+                    animation-name: sticky-cta-slide-in;
+                }
+            }
+
+            li {
+                display: flex;
+
+                @media (width >= 600px) {
+                    align-items: center;
+                    padding: var(--space-1);
+                    background-color: var(--background-alt);
+                }
+
+                .sticky-cta-link {
+                    display: flex;
+                    flex: 1;
+                    align-items: center;
+                    justify-content: center;
+                    gap: var(--space-1);
+                    box-sizing: border-box;
+                    min-height: var(--button-height);
+                    padding: 0 var(--space-3);
+                    background-color: var(--background-color);
+                    box-shadow: var(--shadow-card);
+                    color: var(--text-color);
+                    font-family: var(--heading-font-family);
+                    font-size: var(--body-font-size-xxs);
+                    font-weight: var(--font-weight-heavy);
+                    line-height: calc(16 / 11);
+                    text-align: center;
+                    text-transform: var(--heading-text-transform);
+
+                    /* a card, not a link in running text: the global underline of li links does not apply */
+                    text-decoration: none;
+
+                    @media (width >= 600px) {
+                        flex: none;
+                        width: 178px;
+                    }
+
+                    &:focus-visible {
+                        outline: calc(2 * var(--border-width)) solid var(--brand-primary);
+                        outline-offset: calc(-2 * var(--border-width));
+                    }
+
+                    /* speech bubble of Contact Us: global .icon size (24px), never shrinks */
+                    .icon {
+                        flex: none;
+                    }
+
+                    .sticky-cta-context {
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        overflow: hidden;
+                        clip-path: inset(50%);
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* motion of the bar and of the two CTAs; only runs with prefers-reduced-motion: no-preference */
+@keyframes sticky-cta-rise {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+@keyframes sticky-cta-sink {
+    to {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+@keyframes sticky-cta-slide-out {
+    from {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes sticky-cta-slide-in {
+    to {
+        transform: translateX(-100%);
+    }
+}

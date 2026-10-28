@@ -64,7 +64,11 @@
         "media-text",
         "carousel",
         "breadcrumb",
-        "share"
+        "embed",
+        "share",
+        "sticky-cta",
+        "tabs",
+        "publication-detail"
       ]
     }
   ]

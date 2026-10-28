@@ -1,0 +1,110 @@
+.publication-detail-container {
+    .publication-detail {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        font-size: var(--body-font-size-s);
+        line-height: calc(24 / 15);
+
+        @media (width >= 600px) {
+            flex-flow: row wrap;
+            align-items: flex-start;
+            gap: var(--space-8) var(--space-6);
+        }
+
+        /* column and cover 1:1 with the portal (structural, measured): the cover is 218 × 300;
+           from 1200px its column is 236px wide and the cover keeps 218px inside it */
+        .publication-detail-cover {
+            @media (width >= 600px) {
+                flex: 0 0 218px;
+            }
+
+            @media (width >= 1200px) {
+                flex-basis: 236px;
+            }
+
+            img {
+                display: block;
+                width: 100%;
+                aspect-ratio: 218 / 300;
+                object-fit: cover;
+
+                @media (width >= 600px) {
+                    max-width: 218px;
+                }
+            }
+        }
+
+        .publication-detail-meta {
+            @media (width >= 600px) {
+                flex: 1 1 0;
+                min-width: 0;
+            }
+
+            dl {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-2);
+                margin: 0;
+            }
+
+            dt {
+                font-family: var(--heading-font-family);
+                font-size: var(--heading-font-size-s);
+                font-weight: var(--font-weight-heavy);
+                line-height: calc(22 / 15);
+                text-transform: var(--heading-text-transform);
+            }
+
+            dd {
+                margin: 0;
+            }
+
+            .publication-detail-link {
+                display: inline-flex;
+                align-items: center;
+                gap: var(--space-1);
+                font-family: var(--heading-font-family);
+                font-size: var(--body-font-size-xxs);
+                font-weight: var(--font-weight-heavy);
+                line-height: calc(16 / 11);
+                text-transform: var(--heading-text-transform);
+
+                /* the icon is a mask so it takes the link colour; the svg itself is white */
+                &::after {
+                    content: "";
+                    flex: none;
+                    width: var(--icon-size);
+                    height: var(--icon-size);
+                    background-color: currentcolor;
+                    mask: url("../../icons/external-link.svg") center / contain no-repeat;
+                }
+
+                .publication-detail-link-context {
+                    position: absolute;
+                    width: 1px;
+                    height: 1px;
+                    overflow: hidden;
+                    clip-path: inset(50%);
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .publication-detail-abstract {
+            @media (width >= 600px) {
+                flex-basis: 100%;
+            }
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-4);
+
+                > * {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

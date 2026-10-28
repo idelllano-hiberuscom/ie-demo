@@ -21,7 +21,11 @@
       "media-text",
       "carousel",
       "breadcrumb",
-      "share"
+      "embed",
+      "share",
+      "sticky-cta",
+      "tabs",
+      "publication-detail"
     ]
   },
   {
@@ -67,6 +71,12 @@
     "id": "form",
     "components": [
       "form-field"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tabs-item"
     ]
   }
 ]

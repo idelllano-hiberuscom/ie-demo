@@ -534,6 +534,40 @@
     ]
   },
   {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_uri",
+        "label": "URL del vídeo de YouTube",
+        "description": "Enlace de YouTube (watch, youtu.be o embed) o la URL de su miniatura (img.youtube.com/vi/…). El vídeo se abre en una ventana al pulsar el botón de reproducir.",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "embed_placeholder",
+        "label": "Miniatura del vídeo",
+        "description": "Opcional. Imagen 16:9 que se muestra bajo el botón de reproducir.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_placeholderAlt",
+        "label": "Texto alternativo de la miniatura"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Titular",
+        "description": "Opcional. Se superpone a la miniatura y da nombre al botón de reproducir y a la ventana del vídeo."
+      }
+    ]
+  },
+  {
     "id": "form",
     "fields": [
       {
@@ -785,6 +819,56 @@
     ]
   },
   {
+    "id": "publication-detail",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Portada",
+        "description": "Opcional. Portada de la publicación.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Texto alternativo de la portada",
+        "description": "Déjalo vacío si la portada es decorativa."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "authors",
+        "label": "Autores",
+        "description": "El bloque pone encima la etiqueta «Author(s)».",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "document",
+        "label": "Documento PDF",
+        "description": "PDF de la publicación en el DAM. El bloque pinta el enlace de descarga bajo la etiqueta «Publication».",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "documentText",
+        "label": "Texto del enlace al documento",
+        "description": "Título de la publicación. Es el texto y el nombre accesible del enlace; vacío, el enlace dice «Download the publication»."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "abstract",
+        "label": "Resumen"
+      }
+    ]
+  },
+  {
     "id": "share",
     "fields": [
       {
@@ -806,6 +890,93 @@
         "name": "label",
         "label": "Etiqueta",
         "description": "Texto que precede a los enlaces, por ejemplo «Share». Opcional: déjalo vacío para mostrar solo los iconos."
+      }
+    ]
+  },
+  {
+    "id": "sticky-cta",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "moreInfoLabel",
+        "label": "Texto del botón «More info»",
+        "description": "Botón de la barra fija que despliega y pliega los otros dos enlaces. No navega.",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "contactLabel",
+        "label": "Texto del enlace de contacto",
+        "description": "Opcional. Vacío, el enlace dice «Contact us»."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "contactLink",
+        "label": "Enlace de contacto",
+        "description": "Página o URL de contacto. Sin enlace, el CTA de contacto no se muestra."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brochureLabel",
+        "label": "Texto del enlace del folleto",
+        "description": "Opcional. Vacío, el enlace dice «Download brochure»."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "brochureDocument",
+        "label": "Folleto (PDF del DAM)",
+        "description": "PDF del folleto en el DAM. Se descarga al pulsar el enlace. Sin documento, el CTA del folleto no se muestra.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brochureName",
+        "label": "Título del folleto",
+        "description": "Opcional. Título del PDF: lo anuncian los lectores de pantalla y aparece como sugerencia al pasar el ratón."
+      }
+    ]
+  },
+  {
+    "id": "tabs-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Etiqueta de la pestaña",
+        "description": "Texto del botón de la pestaña. Si lo dejas vacío, se usa el titular."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "label": "Titular"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Subtítulo",
+        "description": "Se muestra en cursiva bajo el titular."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Vídeo (URL de YouTube)",
+        "description": "Acepta una URL de YouTube (watch, youtu.be o embed) o la de su miniatura (img.youtube.com/vi/…)."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "richtext",
+        "label": "Texto"
       }
     ]
   }
