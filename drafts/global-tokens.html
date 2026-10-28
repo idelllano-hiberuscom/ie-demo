@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Global tokens</title>
+<meta name="description" content="Test page for the IE global design tokens: typography, colours, links, buttons and section rhythm.">
+<meta name="nav" content="/drafts/nav">
+<meta name="footer" content="/drafts/footer">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
+  move-to-http-header="true"
+>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem" src="/scripts/aem.js" type="module"></script>
+<script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div>
+  <h1>Heading level one</h1>
+  <h2>Heading level two</h2>
+  <h3>Heading level three</h3>
+  <h4>Heading level four</h4>
+  <h5>Heading level five</h5>
+  <h6>Heading level six</h6>
+</div>
+<div>
+  <h2>Body text</h2>
+  <p>This paragraph uses the body font at the medium size. It contains <strong>strong text in bold</strong>, <em>italic text</em> and <strong><em>bold italic text</em></strong>, so every weight and style that the theme loads is visible on the page.</p>
+  <p>A paragraph with an inline <a href="/drafts/global-tokens">text link</a> inside the sentence, which takes the link colour from the theme.</p>
+  <ul>
+    <li>First list item</li>
+    <li>Second list item with <strong>strong text</strong></li>
+  </ul>
+</div>
+<div>
+  <h2>Buttons</h2>
+  <p><strong><a href="/drafts/global-tokens">Primary button</a></strong></p>
+  <p><em><a href="/drafts/global-tokens">Secondary button</a></em></p>
+  <p><a href="/drafts/global-tokens">Plain link on its own line</a></p>
+</div>
+<div>
+  <h3>Highlighted section</h3>
+  <p>Default content inside a section with the highlight style, which uses the alternative background colour.</p>
+  <div class="section-metadata">
+    <div>
+      <div>style</div>
+      <div>highlight</div>
+    </div>
+  </div>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>
