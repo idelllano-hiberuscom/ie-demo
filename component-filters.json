@@ -18,7 +18,8 @@
       "fragment",
       "accordion",
       "breadcrumb",
-      "form"
+      "form",
+      "tabs"
     ]
   },
   {
@@ -58,6 +59,12 @@
     "id": "form",
     "components": [
       "form-field"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tabs-item"
     ]
   }
 ]
