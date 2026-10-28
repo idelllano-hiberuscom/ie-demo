@@ -1,28 +1,83 @@
 .tabs-container {
+    /* the selected-tab line runs to both edges of the viewport: 100vw counts the scrollbar */
+    overflow-x: clip;
+
     .default-content-wrapper + .tabs-wrapper {
         margin-top: var(--section-padding);
     }
 
     .tabs {
+        /* ── video modal: 1:1 portal, black veil at 80% ── */
+        .tabs-modal {
+            box-sizing: border-box;
+            inset: 0;
+            width: 100%;
+            max-width: none;
+            height: 100%;
+            max-height: none;
+            margin: 0;
+            padding: 64px 16px;
+            border: 0;
+            background-color: rgb(0 0 0 / 80%); /* 1:1 portal */
+            color: var(--text-on-dark);
+            overscroll-behavior: contain;
+
+            &[open] {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &::backdrop {
+                background: none;
+            }
+
+            .tabs-modal-close {
+                position: absolute;
+                inset-block-start: 8px;
+                inset-inline-end: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 48px;
+                height: 48px;
+                padding: 0;
+                border: 0;
+                background: none;
+                color: inherit;
+                cursor: pointer;
+
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+
+            .tabs-modal-frame {
+                width: min(100%, 1224px, (100dvh - 128px) * 16 / 9);
+                aspect-ratio: 16 / 9;
+                background-color: #000;
+
+                iframe {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    border: 0;
+                }
+            }
+        }
+
         .tabs-nav {
             position: relative;
-            margin-inline: calc(-1 * var(--space-2));
-
-            @media (width >= 900px) {
-                margin-inline: calc(-1 * var(--space-4));
-            }
-
-            @media (width >= 1200px) {
-                margin-inline: 0;
-            }
 
             .tabs-list {
                 display: flex;
                 flex-direction: column;
 
-                @media (width >= 1200px) {
+                /* 1:1 portal: horizontal tabs from 1024px */
+                @media (width >= 1024px) {
                     flex-flow: row wrap;
-                    gap: var(--space-6);
+                    gap: 48px; /* 1:1 portal: margin-right 48px */
                 }
 
                 .tabs-tab {
@@ -31,40 +86,35 @@
                     min-height: var(--button-height);
                     margin: 0;
                     border: 0;
-                    border-bottom: var(--border-width) solid var(--text-on-dark);
+                    border-bottom: 1px solid var(--text-on-dark);
                     padding: var(--space-2);
                     background-color: var(--brand-primary);
                     color: var(--text-on-dark);
                     font-family: var(--heading-font-family);
-                    font-size: var(--body-font-size-xs);
+                    font-size: 12px; /* 1:1 portal: dropdown items 12px on mobile */
                     font-weight: var(--font-weight-heavy);
-                    line-height: calc(20 / 13);
+                    line-height: 20px;
                     text-align: start;
-                    text-transform: var(--heading-text-transform);
+                    text-transform: uppercase;
                     cursor: pointer;
 
-                    @media (width >= 600px) {
-                        padding-block: var(--space-3);
+                    @media (width >= 768px) {
+                        font-size: 14px; /* 1:1 portal: dropdown items 14px on tablet */
                     }
 
-                    @media (width >= 900px) {
-                        padding-inline: var(--space-4);
-                    }
-
-                    @media (width >= 1200px) {
+                    @media (width >= 1024px) {
                         display: block;
                         width: auto;
-
-                        /* divergencia deliberada: el portal pinta #ccc, sin token; ver contrato §7 */
-                        border-bottom: 3px solid var(--border-color);
-                        padding: var(--space-2) var(--space-6);
+                        border-bottom: 3px solid #ccc; /* 1:1 portal */
+                        padding: 16px 48px; /* 1:1 portal */
                         background-color: transparent;
                         color: var(--text-color);
+                        font-size: 13px; /* 1:1 portal */
                         transition: border-color 0.2s;
                     }
 
                     &:hover {
-                        @media (width >= 1200px) {
+                        @media (width >= 1024px) {
                             border-bottom-color: var(--brand-primary);
                         }
                     }
@@ -76,33 +126,42 @@
 
                     /* ── selected ── */
                     &[aria-selected='true'] {
+                        position: relative;
                         display: block;
                         order: -1;
-
-                        /* divergencia deliberada: bajo 1200px el portal pinta #00338d, sin token; ver contrato §7 */
-                        border-bottom: 3px solid var(--brand-primary);
-                        padding-block: var(--space-2);
-                        padding-inline-end: calc(var(--space-2) * 2 + var(--space-6));
+                        border-bottom: 0;
+                        padding: 16px 64px 19px 0; /* 1:1 portal: label on the column edge, 3px line under it */
                         background-color: transparent;
                         color: var(--text-color);
-                        font-size: var(--body-font-size-s);
-                        line-height: calc(22 / 15);
+                        font-size: 15px; /* 1:1 portal */
+                        line-height: 22px;
 
-                        @media (width >= 600px) {
-                            font-size: var(--body-font-size-l);
-                            line-height: calc(34 / 28);
+                        /* 1:1 portal: #00338d line, 3px, from edge to edge of the viewport */
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            bottom: 0;
+                            left: calc(50% - 50vw);
+                            width: 100vw;
+                            height: 3px;
+                            background-color: #00338d;
                         }
 
-                        @media (width >= 900px) {
-                            padding-inline-end: calc(var(--space-4) + var(--space-2) + var(--space-6));
+                        @media (width >= 768px) {
+                            font-size: 28px; /* 1:1 portal */
+                            line-height: 34px;
                         }
 
-                        @media (width >= 1200px) {
+                        @media (width >= 1024px) {
                             order: 0;
-                            border-bottom-color: var(--brand-primary);
-                            padding-inline: var(--space-6);
-                            font-size: var(--body-font-size-xs);
-                            line-height: calc(20 / 13);
+                            border-bottom: 3px solid var(--brand-primary); /* 1:1 portal: #006 */
+                            padding: 16px 48px;
+                            font-size: 13px; /* 1:1 portal */
+                            line-height: 20px;
+
+                            &::after {
+                                content: none;
+                            }
                         }
                     }
                 }
@@ -119,8 +178,8 @@
 
             .tabs-toggle {
                 position: absolute;
-                top: var(--space-1);
-                right: var(--space-2);
+                top: 9px; /* 1:1 portal: 40px square, 5px above the line */
+                right: 0;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -133,15 +192,12 @@
                 color: var(--text-on-dark);
                 cursor: pointer;
 
-                @media (width >= 600px) {
-                    top: var(--space-2);
+                @media (width >= 768px) {
+                    top: 14px; /* 1:1 portal */
+                    right: -8px; /* 1:1 portal: 8px past the column edge */
                 }
 
-                @media (width >= 900px) {
-                    right: var(--space-4);
-                }
-
-                @media (width >= 1200px) {
+                @media (width >= 1024px) {
                     display: none;
                 }
 
@@ -170,13 +226,14 @@
         .tabs-panel {
             display: flex;
             flex-direction: column;
-            gap: var(--space-4);
-            padding-block: var(--section-padding);
+            gap: 26px; /* 1:1 portal: title 26px under the video on mobile */
+            padding-block: 32px; /* 1:1 portal */
 
-            @media (width >= 600px) {
+            @media (width >= 768px) {
                 flex-direction: row;
                 align-items: flex-start;
-                gap: var(--space-6);
+                gap: 48px; /* 1:1 portal */
+                padding-block: 48px; /* 1:1 portal */
             }
 
             /* display: flex above would otherwise override the UA rule for [hidden] */
@@ -188,7 +245,7 @@
                 position: relative;
                 aspect-ratio: 37 / 24;
 
-                @media (width >= 600px) {
+                @media (width >= 768px) {
                     flex: 0 0 50%;
                 }
 
@@ -202,10 +259,6 @@
                     background-color: var(--text-color);
                     color: var(--text-on-dark);
                     cursor: pointer;
-
-                    &[hidden] {
-                        display: none;
-                    }
 
                     &:focus-visible {
                         outline: 2px solid var(--brand-primary);
@@ -232,39 +285,52 @@
                         margin: auto;
                     }
                 }
-
-                iframe {
-                    position: absolute;
-                    inset: 0;
-                    width: 100%;
-                    height: 100%;
-                    border: 0;
-                }
             }
 
             .tabs-content {
                 display: flex;
                 flex: 1;
                 flex-direction: column;
-                gap: var(--space-4);
                 min-width: 0;
 
                 .tabs-heading {
                     margin: 0;
-                    font-size: var(--heading-font-size-xl);
-                    line-height: calc(42 / 35);
+                    font-size: 24px; /* 1:1 portal */
+                    line-height: 30px;
+
+                    @media (width >= 768px) {
+                        margin-top: -5px; /* 1:1 portal: first line level with the video */
+                        font-size: 35px; /* 1:1 portal */
+                        line-height: 42px;
+                    }
+
+                    @media (width >= 1024px) {
+                        margin-top: -9px; /* 1:1 portal */
+                    }
                 }
 
                 .tabs-subtitle {
-                    margin: 0;
-                    font-size: var(--body-font-size-m);
+                    margin: 19px 0 0; /* 1:1 portal */
+                    font-size: 15px; /* 1:1 portal */
                     font-style: italic;
+                    line-height: 28px;
+
+                    @media (width >= 768px) {
+                        margin-top: 16px; /* 1:1 portal */
+                        font-size: 18px; /* 1:1 portal */
+                    }
                 }
 
                 .tabs-richtext {
-                    color: var(--text-muted);
-                    font-size: var(--body-font-size-s);
-                    line-height: calc(24 / 15);
+                    margin-top: 18px; /* 1:1 portal */
+                    color: #0f0f0f; /* 1:1 portal */
+                    font-size: 13px; /* 1:1 portal */
+                    line-height: 22px;
+
+                    @media (width >= 768px) {
+                        font-size: 15px; /* 1:1 portal */
+                        line-height: 24px;
+                    }
 
                     > :first-child {
                         margin-top: 0;
