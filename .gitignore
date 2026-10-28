@@ -11,3 +11,25 @@ helix-importer-ui
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md
+
+# Hook de gates: rutas absolutas de esta máquina
+.claude/settings.local.json
+
+# Métricas de consumo de IA: generados por report.cjs (las sesiones sí se versionan)
+.eds-pipeline/*
+.claude/*
+.eds-ai/*
+
+# Métricas de consumo de IA: generados por report.cjs (las sesiones sí se versionan)
+.eds-pipeline/ai-metrics/index.html
+.eds-pipeline/ai-metrics/metrics*.csv
+
+# Credenciales de AEM de la demo: nunca a git
+.aem.env
+
+# Originales bajados del portal para el DAM: contenido del cliente, no va a git
+.eds-pipeline/dam/originales/
+import-work/*
+
+# Copias de AEM antes de escribir: contenido del cliente, no va a git
+.eds-pipeline/aem-backups/
