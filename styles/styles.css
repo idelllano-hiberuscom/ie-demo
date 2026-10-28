@@ -351,3 +351,71 @@ main .section.light,
 main .section.highlight {
     background-color: var(--background-alt);
 }
+
+/* section style: dark (DH-07) */
+main .section.dark {
+    background: var(--section-dark-background);
+    color: var(--section-dark-color);
+}
+
+/* a dark section nested in a fragment misses the main > .section padding, and its background makes that visible */
+:where(main .section .section.dark) {
+    padding: var(--section-padding) var(--space-2);
+}
+
+@media (width >= 900px) {
+    :where(main .section .section.dark) {
+        padding-inline: var(--space-4);
+    }
+}
+
+main .section.dark a:any-link:not(.button) {
+    color: var(--section-dark-color);
+}
+
+/* light variant of the solid button, as measured on the portal's dark band */
+main .section.dark a.button.primary,
+main .section.dark button.button.primary {
+    background-color: var(--section-dark-color);
+    color: var(--text-color);
+}
+
+main .section.dark a.button.secondary,
+main .section.dark button.button.secondary {
+    box-shadow: inset 0 0 0 var(--border-width) var(--section-dark-color);
+    color: var(--section-dark-color);
+}
+
+/* section style: centered (DH-07) */
+main .section.centered {
+    text-align: center;
+}
+
+/* consecutive buttons share a row from 600px; below it they stack at full width */
+main .section.centered .default-content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: var(--space-3);
+}
+
+main .section.centered .default-content-wrapper > * {
+    flex-basis: 100%;
+    min-width: 0;
+}
+
+main .section.centered .default-content-wrapper a.button:any-link,
+main .section.centered .default-content-wrapper button.button {
+    width: 100%;
+}
+
+@media (width >= 600px) {
+    main .section.centered .default-content-wrapper > .button-wrapper {
+        flex-basis: auto;
+    }
+
+    main .section.centered .default-content-wrapper a.button:any-link,
+    main .section.centered .default-content-wrapper button.button {
+        width: auto;
+    }
+}
