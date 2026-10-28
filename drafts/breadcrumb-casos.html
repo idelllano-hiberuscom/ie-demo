@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Breadcrumb: edge cases</title>
+<meta name="description" content="Edge cases of the breadcrumb block: the trails of the five pages in scope, over an image hero and a video hero, in dark and centered sections, long and incomplete trails and nested in a fragment.">
+<meta name="nav" content="/drafts/nav">
+<meta name="footer" content="/drafts/footer">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
+  move-to-http-header="true"
+>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem" src="/scripts/aem.js" type="module"></script>
+<script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Our News</p></div><div><p><a href="/our-news/">/our-news/</a></p></div></div>
+    <div><div><p>The Future Of Work In Design And Architecture: #iefuturetalks</p></div><div></div></div>
+  </div>
+  <h1>The future of work in design and architecture</h1>
+  <p>News page: the breadcrumb is the first block of the page, before the title.</p>
+</div>
+<div>
+  <div class="hero">
+    <div><div><picture><img src="/drafts/media/hero-city.jpg" alt="" width="1440" height="745"></picture></div></div>
+    <div><div></div></div>
+    <div><div><p>Madrid campuses</p></div></div>
+    <div><div><p>Dive into the capital</p></div></div>
+    <div><div><p><a href="/drafts/global-tokens">Take the virtual tour</a></p></div></div>
+    <div><div></div></div>
+  </div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Our Spaces</p></div><div><p><a href="/our-spaces/">/our-spaces/</a></p></div></div>
+    <div><div><p>Madrid Campuses | Ie University</p></div><div></div></div>
+  </div>
+</div>
+<div>
+  <div class="hero video">
+    <div><div><picture><img src="/drafts/media/hero-hall.jpg" alt="" width="1440" height="745"></picture></div></div>
+    <div><div><p>https://img.youtube.com/vi/4ZBEpHUE-tY/maxresdefault.jpg</p></div></div>
+    <div><div><p>Programs in business and management</p></div></div>
+    <div><div></div></div>
+    <div><div></div></div>
+    <div><div></div></div>
+  </div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Programs</p></div><div><p><a href="/programs/">/programs/</a></p></div></div>
+    <div><div><p>Programs In Business &amp; Management With A Long Title That Reaches The Pause Button</p></div><div></div></div>
+  </div>
+</div>
+<div>
+  <div class="hero">
+    <div><div><picture><img src="/drafts/media/hero-hall.jpg" alt="" width="1440" height="745"></picture></div></div>
+    <div><div></div></div>
+    <div><div><p>The next fifty: school of architecture and design</p></div></div>
+    <div><div><p>Creativity in the age of technology</p></div></div>
+    <div><div></div></div>
+    <div><div></div></div>
+  </div>
+</div>
+<div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>The Next Fifty</p></div><div><p><a href="/the-next-fifty/">/the-next-fifty/</a></p></div></div>
+    <div><div><p>The Next 50: School Of Architecture &amp; Design</p></div><div></div></div>
+  </div>
+  <div class="section-metadata">
+    <div><div>style</div><div>centered</div></div>
+  </div>
+</div>
+<div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Programs</p></div><div><p><a href="/programs/">/programs/</a></p></div></div>
+    <div><div><p>Programs In Business &amp; Management</p></div><div></div></div>
+  </div>
+  <div class="section-metadata">
+    <div><div>style</div><div>dark, centered</div></div>
+  </div>
+</div>
+<div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Publications</p></div><div><p><a href="/publications/">/publications/</a></p></div></div>
+    <div><div><p>The Impact Of Logistics In Cities</p></div><div></div></div>
+  </div>
+  <h2>The impact of logistics in cities</h2>
+  <p>Publication page: the breadcrumb comes before the title of the publication.</p>
+</div>
+<div>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Our News</p></div><div></div></div>
+  </div>
+  <div class="section-metadata">
+    <div><div>style</div><div>dark</div></div>
+  </div>
+</div>
+<div>
+  <h2>Edge cases</h2>
+  <p>Four levels, an intermediate level without a link and a link on the last item, which is ignored.</p>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div><p>Programs</p></div><div><p><a href="/programs/">/programs/</a></p></div></div>
+    <div><div><p>Business And Management</p></div><div></div></div>
+    <div><div><p>Master In Management With A Very Long Title That Has To Be Cut With An Ellipsis On Narrow Screens</p></div><div><p><a href="/programs/master-in-management/">/programs/master-in-management/</a></p></div></div>
+  </div>
+  <p>An empty item and an item whose label is missing but whose link has a text of its own.</p>
+  <div class="breadcrumb">
+    <div><div><p>Home</p></div><div><p><a href="/">/</a></p></div></div>
+    <div><div></div><div></div></div>
+    <div><div></div><div><p><a href="/our-news/">Our News</a></p></div></div>
+    <div><div><p>Current Page</p></div></div>
+  </div>
+</div>
+<div>
+  <h2>Nested in a fragment</h2>
+  <div class="fragment">
+    <div>
+      <div><a href="/drafts/breadcrumb-fragment">/drafts/breadcrumb-fragment</a></div>
+    </div>
+  </div>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>

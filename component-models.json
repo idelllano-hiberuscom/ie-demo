@@ -266,6 +266,26 @@
     ]
   },
   {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Texto del nivel",
+        "description": "Nombre de la página de este nivel. El último nivel es la página actual.",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "link",
+        "label": "Enlace del nivel",
+        "description": "Página a la que lleva el nivel. En el último nivel (la página actual) se ignora: déjalo vacío."
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
