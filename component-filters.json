@@ -17,9 +17,10 @@
       "columns",
       "fragment",
       "accordion",
+      "form",
+      "media-text",
       "carousel",
       "breadcrumb",
-      "form",
       "share"
     ]
   },
