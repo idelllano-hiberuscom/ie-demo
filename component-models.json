@@ -22,6 +22,13 @@
         "label": "Keywords"
       },
       {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image (og:image)",
+        "multi": false
+      },
+      {
         "component": "select",
         "valueType": "string",
         "name": "template",
