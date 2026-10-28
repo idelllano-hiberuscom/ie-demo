@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tabs — edge cases</title>
+<meta name="description" content="Edge cases of the tabs block (EDS-COMP-012): optional fields empty, an invalid video URL and an instance nested in a fragment.">
+<meta name="nav" content="/drafts/nav">
+<meta name="footer" content="/drafts/footer">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="script-src 'nonce-aem' 'strict-dynamic' 'unsafe-inline' http: https:; base-uri 'self'; object-src 'none';"
+  move-to-http-header="true"
+>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem" src="/scripts/aem.js" type="module"></script>
+<script nonce="aem" src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div>
+  <h1>Tabs — edge cases</h1>
+  <p>Edge cases of the tabs block, reviewed by hand. The realistic page is /drafts/tabs.</p>
+</div>
+<div>
+  <h2>Optional fields empty</h2>
+  <p>First item: title and text only. Second item: no title (the heading becomes the label), no subtitle and an invalid video URL. Third item: every field empty (the label falls back to the placeholder text). Fourth item: video only.</p>
+<div class="tabs">
+  <div>
+    <div><p>Only text</p></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div><p>This item has a title and a text. Heading, subtitle and video are empty, so the text takes the full width of the panel.</p><ul><li>First point of a list</li><li>Second point of a list</li></ul></div>
+  </div>
+  <div>
+    <div></div>
+    <div><p>Heading used as the tab label</p></div>
+    <div></div>
+    <div><p>https://www.example.com/not-a-video</p></div>
+    <div><p>The title is empty and the video URL is not a YouTube one: there is no player and no media column.</p></div>
+  </div>
+  <div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div>
+    <div><p>Video only</p></div>
+    <div></div>
+    <div></div>
+    <div><p>https://www.youtube.com/watch?v=dN1IYLyxLV8&amp;t=10s</p></div>
+    <div></div>
+  </div>
+</div>
+</div>
+<div>
+  <h2>Nested in a fragment</h2>
+  <div class="fragment">
+    <div>
+      <div><a href="/drafts/tabs-fragment">/drafts/tabs-fragment</a></div>
+    </div>
+  </div>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>
