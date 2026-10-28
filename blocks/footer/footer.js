@@ -79,8 +79,33 @@ function decorateSocial(list) {
 }
 
 /**
+ * Copy of a card image for its panel (1:1 portal: the open panel repeats the card image
+ * beside the text). Decorative duplicate: empty alt, no editor or field attributes, so the
+ * Universal Editor keeps one editable image per principle.
+ * @param {Element} picture The card picture
+ * @returns {Element} div.footer-principles-media holding the copy
+ */
+function clonePanelMedia(picture) {
+  const copy = picture.cloneNode(true);
+  [copy, ...copy.querySelectorAll('*')].forEach((element) => {
+    [...element.attributes]
+      .filter(({ name }) => name.startsWith('data-aue-') || name.startsWith('data-richtext-'))
+      .forEach(({ name }) => element.removeAttribute(name));
+  });
+  copy.querySelectorAll('img').forEach((img) => {
+    img.alt = '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+  });
+  const media = document.createElement('div');
+  media.className = 'footer-principles-media';
+  media.append(copy);
+  return media;
+}
+
+/**
  * Turns one group of principles into a row of image cards; each card discloses its text
- * in a panel placed after the row.
+ * in a panel placed after the row: the card image on one side, the text on the other.
  * @param {Element} wrapper The section's default content wrapper
  * @param {Array<{picture: Element, details: Element[]}>} items
  */
@@ -109,7 +134,10 @@ function buildPrinciplesGroup(wrapper, items) {
     panel.className = 'footer-principles-panel';
     panel.id = `footer-principles-panel-${panelCount}`;
     panel.hidden = true;
-    panel.append(...details);
+    const body = document.createElement('div');
+    body.className = 'footer-principles-body';
+    body.append(...details);
+    panel.append(clonePanelMedia(image), body);
     wrapper.append(panel);
 
     const toggle = document.createElement('button');

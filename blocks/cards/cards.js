@@ -491,11 +491,13 @@ function buildFacts(fields, labels) {
  * portal). The panel stays inside its card: the grid places it under the row (dense flow), so
  * the reading order is button → panel and the fields keep the resource of their item.
  * The panel repeats the title as the portal does, hidden from assistive technology (the
- * button already names it).
+ * button already names it), and the tile image beside the text (1:1 portal): a decorative
+ * copy without field or editor attributes, so the card keeps one editable image.
  * @param {Element} heading title heading
  * @param {Element} details panel with the text and the links
+ * @param {Element|undefined} imageCell image cell of the card
  */
-function buildDisclosure(heading, details) {
+function buildDisclosure(heading, details, imageCell) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'cards-card-toggle';
@@ -509,6 +511,26 @@ function buildDisclosure(heading, details) {
   title.setAttribute('aria-hidden', 'true');
   title.textContent = button.textContent.trim();
   details.prepend(title);
+
+  const body = document.createElement('div');
+  body.className = 'cards-card-details-body';
+  body.append(...details.childNodes);
+  details.append(body);
+
+  const picture = imageCell?.querySelector('picture');
+  if (picture) {
+    const copy = picture.cloneNode(true);
+    [copy, ...copy.querySelectorAll('*')].forEach((element) => {
+      [...element.attributes]
+        .filter(({ name }) => /^data-(aue|richtext|cards)-/.test(name))
+        .forEach(({ name }) => element.removeAttribute(name));
+    });
+    copy.querySelectorAll('img').forEach((img) => { img.alt = ''; });
+    const media = document.createElement('div');
+    media.className = 'cards-card-details-media';
+    media.append(copy);
+    details.prepend(media);
+  }
   details.hidden = true;
 }
 
@@ -609,7 +631,7 @@ function decorateCard(row, variant, id, labels) {
   if (actions.children.length) details.append(actions);
 
   const reveal = variant === 'overlay' && heading && details.children.length;
-  if (reveal) buildDisclosure(heading, details);
+  if (reveal) buildDisclosure(heading, details, fields.image);
   else body.append(...details.children);
 
   // facts and category belong to program only; elsewhere they stay in the card, hidden
@@ -1124,7 +1146,8 @@ document.addEventListener('aue:ui-select', revealOnEditorSelect, true);
  *           │     └── div.cards-card-actions > link and link2 cells
  *           └── div[hidden] × n                                 (empty or unused cells)
  *   overlay: div.cards-card-tile (image + body, title h3 > button.cards-card-toggle) and
- *     div.cards-card-details[hidden] (text + actions), both in the card.
+ *     div.cards-card-details[hidden] (copy of the image + div.cards-card-details-body with the
+ *     text and actions), both in the card.
  *   numbered: div.cards-list[role=list] > cards · button.cards-show-all
  *   stats:    div.cards-list[role=list] > cards · div.cards-controls (arrows, ol.cards-dots)
  *   program:  div.cards-tabs[role=tablist] (with categories) ·
