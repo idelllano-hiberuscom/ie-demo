@@ -22,7 +22,9 @@
       "carousel",
       "breadcrumb",
       "share",
-      "publication-detail"
+      "publication-detail",
+      "form",
+      "embed"
     ]
   },
   {
