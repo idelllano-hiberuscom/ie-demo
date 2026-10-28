@@ -131,6 +131,15 @@ footer {
                         height: 320px;
                         object-fit: cover;
                     }
+
+                    /* the row of tiles keeps the 1440px framing (290 × 320) when its tiles narrow */
+                    :where(li:not(:only-child)) img {
+                        @media (width >= 1024px) {
+                            height: auto;
+                            max-height: 320px;
+                            aspect-ratio: 290 / 320;
+                        }
+                    }
                 }
 
                 .footer-principles-toggle {
@@ -142,18 +151,50 @@ footer {
                     cursor: pointer;
                 }
 
+                /* 1:1 portal: card image and text side by side from desktop, stacked below */
                 .footer-principles-panel {
                     display: flex;
                     flex-direction: column;
-                    gap: var(--space-3);
-                    padding: calc(var(--space-2) + var(--space-3));
+                    padding: var(--space-2);
+
+                    @media (width >= 1024px) {
+                        display: grid;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        align-items: start;
+                        column-gap: var(--space-4);
+                    }
 
                     &[hidden] {
                         display: none;
                     }
+                }
+
+                /* 1:1 portal: art-directed crops 400×450, 500×300 (768px) and 600×550 (1080px) */
+                .footer-principles-media img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    aspect-ratio: 400 / 450;
+                    object-fit: cover;
+
+                    @media (width >= 768px) {
+                        aspect-ratio: 500 / 300;
+                    }
+
+                    @media (width >= 1024px) {
+                        aspect-ratio: 600 / 550;
+                    }
+                }
+
+                .footer-principles-body {
+                    padding: var(--space-3);
+
+                    @media (width >= 1024px) {
+                        padding-left: var(--space-6);
+                    }
 
                     :is(h2, h3, h4, h5, h6) {
-                        margin: 0;
+                        margin: 0 0 15px; /* 1:1 portal */
                         font-size: var(--heading-font-size-s);
                         line-height: calc(22 / 15);
                     }
@@ -162,6 +203,10 @@ footer {
                         margin: 0;
                         font-size: var(--body-font-size-s);
                         line-height: calc(24 / 15);
+
+                        + p {
+                            margin-top: var(--space-3);
+                        }
                     }
                 }
             }
