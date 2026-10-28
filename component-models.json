@@ -142,6 +142,122 @@
     ]
   },
   {
+    "id": "accordion-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icono",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "iconAlt",
+        "label": "Texto alternativo del icono",
+        "description": "Déjalo vacío si el icono es decorativo."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "summary",
+        "label": "Título del proyecto",
+        "description": "Se muestra en la barra del ítem, que abre y cierra el contenido.",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Texto"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image1",
+        "label": "Foto 1",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image1Alt",
+        "label": "Texto alternativo de la foto 1"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image2",
+        "label": "Foto 2",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image2Alt",
+        "label": "Texto alternativo de la foto 2"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image3",
+        "label": "Foto 3",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image3Alt",
+        "label": "Texto alternativo de la foto 3"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image4",
+        "label": "Foto 4",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image4Alt",
+        "label": "Texto alternativo de la foto 4"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Vídeo (URL de YouTube)",
+        "description": "Opcional. Admite URL de YouTube watch, youtu.be, embed o miniatura (img.youtube.com/vi/…)."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "team",
+        "label": "Equipo",
+        "description": "Lista de miembros. El bloque pone encima la etiqueta «Team Members»."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "document",
+        "label": "Documento PDF",
+        "description": "PDF del proyecto en el DAM. El bloque pinta el enlace de descarga «Discover More».",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "documentTitle",
+        "label": "Título del documento",
+        "description": "Nombre del proyecto. Es el nombre accesible del enlace «Discover More».",
+        "required": true
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
