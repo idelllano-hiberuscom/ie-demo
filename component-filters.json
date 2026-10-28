@@ -21,6 +21,8 @@
       "media-text",
       "carousel",
       "breadcrumb",
+      "form",
+      "embed",
       "share"
     ]
   },
