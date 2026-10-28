@@ -140,6 +140,9 @@ function setMissing(element, values) {
   });
 }
 
+/** Blocks instrumented by the fallback while detached from the document (fragments). */
+let detachedCount = 0;
+
 /**
  * Fallback instrumentation for Universal Editor. AEM delivers the data-aue-* attributes of the
  * block, its items and their fields when the page is opened in the editor, and
@@ -149,7 +152,10 @@ function setMissing(element, values) {
  */
 function instrumentFallback(block) {
   if (block.dataset.aueResource) return;
-  const position = Math.max(0, [...document.querySelectorAll('.breadcrumb')].indexOf(block));
+  // One resource per block: a fragment is decorated before it is attached to the document
+  // (indexOf is -1), so a detached block gets its own suffix, as in embed and media-text.
+  const blockIndex = [...document.querySelectorAll('.breadcrumb')].indexOf(block);
+  const position = blockIndex >= 0 ? blockIndex : `detached-${detachedCount += 1}`;
   const base = `urn:aemconnection:${window.location.pathname}#breadcrumb-${position}`;
 
   setMissing(block, {

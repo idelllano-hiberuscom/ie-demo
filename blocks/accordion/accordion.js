@@ -62,6 +62,9 @@ const UE_FIELDS = {
 
 let idCounter = 0;
 
+/** Blocks instrumented by the fallback while detached from the document (fragments). */
+let detachedCount = 0;
+
 // Blocks whose click handler is already wired (decorate() may run twice on the same block).
 const wiredBlocks = new WeakSet();
 
@@ -465,8 +468,10 @@ document.addEventListener('aue:ui-select', openOnEditorSelect, true);
 export default function decorate(block) {
   [...block.children].forEach(decorateItem);
 
-  const blocks = [...document.querySelectorAll('.accordion')];
-  instrumentFallback(block, Math.max(0, blocks.indexOf(block)));
+  // One resource per block: a fragment is decorated before it is attached to the document
+  // (indexOf is -1), so a detached block gets its own suffix, as in embed and media-text.
+  const position = [...document.querySelectorAll('.accordion')].indexOf(block);
+  instrumentFallback(block, position >= 0 ? position : `detached-${detachedCount += 1}`);
 
   if (wiredBlocks.has(block)) return;
   wiredBlocks.add(block);
