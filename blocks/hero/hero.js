@@ -53,7 +53,9 @@ let placeholdersRequest;
 
 /**
  * Fetches the site placeholders once (/placeholders.json, rows Key/Text) and
- * returns them keyed in camelCase. Any failure resolves to an empty object.
+ * returns them keyed both as written and in camelCase: toCamelCase lowercases
+ * camelCase keys (pauseVideo -> pausevideo), so the raw key must stay readable.
+ * Any failure resolves to an empty object.
  * @returns {Promise<Object<string, string>>} placeholders
  */
 function fetchPlaceholders() {
@@ -62,7 +64,7 @@ function fetchPlaceholders() {
       .then((response) => (response.ok ? response.json() : {}))
       .then((json) => Object.fromEntries((json.data || [])
         .filter((row) => row.Key && row.Text)
-        .map((row) => [toCamelCase(row.Key), row.Text])))
+        .flatMap((row) => [[toCamelCase(row.Key), row.Text], [row.Key, row.Text]])))
       .catch(() => ({}));
   }
   return placeholdersRequest;
