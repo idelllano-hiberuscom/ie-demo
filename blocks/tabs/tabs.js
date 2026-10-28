@@ -86,7 +86,7 @@ const FIELD_TYPES = {
 };
 
 /** Tabs (horizontal list) from this width; below it the list collapses (contract §2). */
-const TABS_LAYOUT_QUERY = '(width >= 1200px)';
+const TABS_LAYOUT_QUERY = '(width >= 1024px)';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -288,14 +288,45 @@ function prioritizeThumbnail(block, panel) {
 }
 
 /**
- * Starts the player of a video cell, in place of its thumbnail.
+ * Builds the video modal of the block (1:1 portal: the video opens over a black veil, not
+ * in place). A native <dialog> opened with showModal(); closing it unloads the player.
+ * @returns {HTMLDialogElement} the modal
+ */
+function buildModal() {
+  const dialog = document.createElement('dialog');
+  dialog.className = 'tabs-modal';
+
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'tabs-modal-close';
+  close.setAttribute('aria-label', 'Close');
+  close.append(buildIcon('0 0 24 24', ['M5 5l14 14', 'M19 5L5 19']));
+  close.addEventListener('click', () => dialog.close());
+
+  const frame = document.createElement('div');
+  frame.className = 'tabs-modal-frame';
+  dialog.append(close, frame);
+
+  // a click on the veil reaches the dialog itself
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    frame.querySelector('iframe')?.remove();
+    document.documentElement.style.overflow = '';
+  });
+  return dialog;
+}
+
+/**
+ * Opens the player of a video cell in the block modal.
  * @param {Element} cell div.tabs-video
+ * @param {HTMLDialogElement} dialog the block modal
  * @param {Object<string, string>} labels fixed texts
  */
-function playVideo(cell, labels) {
-  const button = cell.querySelector('.tabs-video-play');
+function playVideo(cell, dialog, labels) {
   const { videoId, videoName } = cell.dataset;
-  if (!button || !videoId || cell.querySelector('iframe')) return;
+  if (!videoId || dialog.open) return;
 
   const iframe = document.createElement('iframe');
   iframe.src = `${VIDEO_ORIGIN}/embed/${videoId}?${VIDEO_PARAMS}`;
@@ -304,23 +335,10 @@ function playVideo(cell, labels) {
   iframe.allowFullscreen = true;
   iframe.referrerPolicy = 'strict-origin-when-cross-origin';
 
-  button.hidden = true;
-  cell.append(iframe);
-  iframe.focus();
-}
-
-/**
- * Unloads the player of a panel (which stops the video) and shows its thumbnail again.
- * @param {Element} panel tab panel
- */
-function stopVideo(panel) {
-  panel.querySelectorAll('.tabs-video').forEach((cell) => {
-    const iframe = cell.querySelector('iframe');
-    if (!iframe) return;
-    iframe.remove();
-    const button = cell.querySelector('.tabs-video-play');
-    if (button) button.hidden = false;
-  });
+  dialog.setAttribute('aria-label', videoName || labels.video);
+  dialog.querySelector('.tabs-modal-frame').append(iframe);
+  document.documentElement.style.overflow = 'hidden';
+  dialog.showModal();
 }
 
 /**
@@ -528,18 +546,19 @@ document.addEventListener('aue:ui-select', showOnEditorSelect, true);
  *     ├── div.tabs-nav[.tabs-expanded]
  *     │     ├── div.tabs-list[role=tablist]
  *     │     │     └── button.tabs-tab[role=tab][aria-selected][aria-controls] > span × N
- *     │     └── button.tabs-toggle[aria-expanded][aria-controls] > svg   (below 1200px)
- *     └── div.tabs-panel[role=tabpanel][aria-labelledby][hidden] × N   (the original rows)
- *           ├── div.tabs-video > button.tabs-video-play > img + svg  → iframe on play
- *           └── div.tabs-content
- *                 ├── h3.tabs-heading
- *                 ├── p.tabs-subtitle
- *                 └── div.tabs-richtext
+ *     │     └── button.tabs-toggle[aria-expanded][aria-controls] > svg   (below 1024px)
+ *     ├── div.tabs-panel[role=tabpanel][aria-labelledby][hidden] × N   (the original rows)
+ *     │     ├── div.tabs-video > button.tabs-video-play > img + svg  → modal on play
+ *     │     └── div.tabs-content
+ *     │           ├── h3.tabs-heading
+ *     │           ├── p.tabs-subtitle
+ *     │           └── div.tabs-richtext
+ *     └── dialog.tabs-modal > button.tabs-modal-close + div.tabs-modal-frame (iframe on play)
  *
  * Keyboard (as the portal: activation on Enter, Space or click, not on focus): arrow keys
- * move the focus between tabs, Home and End go to the first and last one. Below 1200px the
+ * move the focus between tabs, Home and End go to the first and last one. Below 1024px the
  * list collapses to the selected tab plus a toggle that shows the others; it stays open
- * after a selection, as on the portal. Changing tab unloads the player of the previous one.
+ * after a selection, as on the portal. The video plays in a modal, as on the portal.
  *
  * @param {Element} block - Root element of the block
  */
@@ -587,7 +606,6 @@ export default function decorate(block) {
       tab.setAttribute('aria-selected', String(isSelected));
       tab.tabIndex = isSelected ? 0 : -1;
       panel.hidden = !isSelected;
-      if (!isSelected) stopVideo(panel);
     });
   };
 
@@ -629,12 +647,14 @@ export default function decorate(block) {
 
   toggle.addEventListener('click', () => setExpanded(!nav.classList.contains('tabs-expanded')));
 
+  const modal = buildModal();
+  block.append(modal);
   block.addEventListener('click', (event) => {
     const play = event.target.closest('.tabs-video-play');
-    if (play) playVideo(play.parentElement, labels);
+    if (play) playVideo(play.parentElement, modal, labels);
   });
 
-  // The tabs read as a row from 1200px and as a column below it.
+  // The tabs read as a row from 1024px and as a column below it.
   const tabsLayout = window.matchMedia(TABS_LAYOUT_QUERY);
   const setOrientation = () => {
     // [QA] [ANTES] the listener outlived the block: Universal Editor replaces a block on

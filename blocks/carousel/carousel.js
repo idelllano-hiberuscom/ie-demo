@@ -11,8 +11,9 @@
  * QA Changes:
  * - Ends, 1:1 with the portal (orchestrator decision): the carousel stops at the first and
  *   last position in every variant, no loop. The arrow at an end gets aria-disabled="true"
- *   (not disabled, so it keeps the focus) and does nothing when pressed; the CSS dims it to
- *   the portal's .scroll-btn:disabled { opacity: .3 }. Closes the blocking TODO of navigate().
+ *   (not disabled, so it keeps the focus) and does nothing when pressed; as on the portal,
+ *   only cards dims it (.scroll-btn:disabled { opacity: .3 }). Closes the blocking TODO of
+ *   navigate().
  * - The arrows follow the scroll position (scroll and intersection), so they are right after
  *   a swipe, a keyboard scroll or a dot, not only after a click on an arrow.
  * - Fallback data-aue-* only when AEM has not instrumented the block (local drafts, preview),
@@ -42,6 +43,9 @@ const DEFAULT_LABELS = {
 
 /** Variants without dot indicators in the portal captures (contract §2). */
 const NO_INDICATORS = ['cards', 'blog'];
+
+/** Dots shown at once by the logos variant (portal: 7 dynamic dots). */
+const DOT_WINDOW = 7;
 
 /** Variants whose arrows step a whole page of visible slides (blog: 10 slides of 2, DH-02). */
 const PAGED = ['blog'];
@@ -343,6 +347,27 @@ function schedulePlaceholders(block) {
 }
 
 /**
+ * Dynamic dots of the logos variant, 1:1 with the portal: a window of DOT_WINDOW dots that
+ * follows the current slide. The current dot is full size, its neighbours 0.75, the two
+ * ends of the window 0.5 and the rest 0.65 (CSS reads data-dot).
+ * @param {Element} block the block
+ * @param {number} current index of the current slide
+ */
+function updateDynamicDots(block, current) {
+  const items = [...block.querySelectorAll('.carousel-slide-indicator')];
+  const size = Math.min(DOT_WINDOW, items.length);
+  const start = Math.max(0, Math.min(current - Math.floor(size / 2), items.length - size));
+  const end = start + size - 1;
+  items.forEach((item, index) => {
+    item.hidden = index < start || index > end;
+    if (index === current) delete item.dataset.dot;
+    else if (index === start || index === end) item.dataset.dot = 'edge';
+    else if (Math.abs(index - current) === 1) item.dataset.dot = 'near';
+    else delete item.dataset.dot;
+  });
+}
+
+/**
  * Marks the visible slides as active: shown to assistive technology and with their
  * links focusable; the rest hidden and out of the tab order (contract §7).
  * @param {Element} block the block
@@ -366,6 +391,7 @@ function updateActiveSlides(block, visible) {
     if (index === first) button.setAttribute('aria-current', 'true');
     else button.removeAttribute('aria-current');
   });
+  if (block.classList.contains('logos')) updateDynamicDots(block, first);
 
   const counter = block.querySelector('.carousel-counter');
   if (counter) counter.dataset.current = first + 1;

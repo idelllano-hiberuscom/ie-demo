@@ -263,6 +263,20 @@ function decorateDownload(documentCell, titleCell) {
     hidden.textContent = context;
     link.append(hidden);
   }
+
+  // 1:1 portal: external-link icon after the text (IconSystem BaseExternalLink, 24 × 24)
+  const ns = 'http://www.w3.org/2000/svg';
+  const icon = document.createElementNS(ns, 'svg');
+  icon.setAttribute('class', 'accordion-item-download-icon');
+  icon.setAttribute('viewBox', '0 0 64 64');
+  icon.setAttribute('aria-hidden', 'true');
+  icon.setAttribute('focusable', 'false');
+  const path = document.createElementNS(ns, 'path');
+  path.setAttribute('fill', 'currentColor');
+  path.setAttribute('fill-rule', 'evenodd');
+  path.setAttribute('d', 'M24.57 37.088l21.778-21.775h-7.575V12H52v13.699h-3.314v-8.037l-21.773 21.77-2.343-2.344zm20.57-6.015v17.614H15.313v-29.82h18.101v-3.314H12V52h36.453V31.073H45.14z');
+  icon.append(path);
+  link.append(icon);
   return link;
 }
 
@@ -324,12 +338,15 @@ function decorateItem(row) {
 
   const team = cell(CELL.team);
   const video = buildVideo(cell(CELL.video), name);
+  const documentCell = cell(CELL.document);
+  const download = decorateDownload(documentCell, cell(CELL.documentTitle));
 
+  let credits = null;
   if (hasContent(team) || video) {
     const details = document.createElement('div');
     details.className = 'accordion-item-details';
     if (hasContent(team)) {
-      const credits = document.createElement('div');
+      credits = document.createElement('div');
       credits.className = 'accordion-item-credits';
       const heading = document.createElement('h4');
       heading.className = 'accordion-item-team-title';
@@ -342,14 +359,17 @@ function decorateItem(row) {
     body.append(details);
   }
 
-  const documentCell = cell(CELL.document);
-  const download = decorateDownload(documentCell, cell(CELL.documentTitle));
   const panels = [body];
   if (download) {
     documentCell.className = 'accordion-item-document';
-    documentCell.id = `${bodyId}-document`;
-    documentCell.hidden = true;
-    panels.push(documentCell);
+    if (credits) {
+      // 1:1 portal: «Discover More» closes the team column, inside the body panel
+      credits.append(documentCell);
+    } else {
+      documentCell.id = `${bodyId}-document`;
+      documentCell.hidden = true;
+      panels.push(documentCell);
+    }
   }
   button.setAttribute('aria-controls', panels.map((panel) => panel.id).join(' '));
 

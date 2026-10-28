@@ -66,6 +66,12 @@
                 }
 
                 .accordion-item-text {
+                    margin-bottom: 16px; /* 1:1 portal: photos 64px under the text */
+
+                    > * {
+                        margin-block: 1em; /* 1:1 portal: paragraphs 18px apart */
+                    }
+
                     > :first-child {
                         margin-top: 0;
                     }
@@ -97,26 +103,29 @@
                     gap: var(--space-8);
                     padding-top: var(--section-padding);
 
-                    @media (width >= 600px) {
+                    /* 1:1 portal: team and video side by side from 768px, video on the right */
+                    @media (width >= 768px) {
                         flex-direction: row;
                         align-items: flex-start;
-                        gap: var(--space-6);
+                        gap: 48px; /* 1:1 portal: margin-right 48px of the team column */
                     }
 
                     .accordion-item-credits {
                         display: flex;
                         flex: 1;
                         flex-direction: column;
-                        gap: calc(var(--space-6) + var(--space-1));
 
                         .accordion-item-team-title {
                             margin: 0;
                             font-size: var(--heading-font-size-xl);
-                            line-height: calc(42 / 35);
+                            line-height: 1.2; /* 1:1 portal: 35px / 42px */
                         }
 
                         .accordion-item-team {
-                            font-size: var(--body-font-size-s);
+                            margin-top: 47px; /* 1:1 portal: list 89px under the top of the title */
+                            color: #0f0f0f; /* 1:1 portal */
+                            font-size: 15px; /* 1:1 portal */
+                            line-height: 24px;
 
                             > :first-child {
                                 margin-top: 0;
@@ -129,10 +138,12 @@
                     }
 
                     .accordion-item-video {
+                        order: -1; /* 1:1 portal: the video comes first in the portal DOM */
                         aspect-ratio: 37 / 24;
 
-                        @media (width >= 600px) {
+                        @media (width >= 768px) {
                             flex: 0 0 33%;
+                            order: 0;
                         }
 
                         iframe {
@@ -154,6 +165,12 @@
                     display: none;
                 }
 
+                /* ── in the team column: «Discover More» closes it (moved there by the JS) ── */
+                .accordion-item-credits > & {
+                    margin-top: 49px; /* 1:1 portal: button 49px under the list */
+                    padding: 0;
+                }
+
                 > p {
                     display: flex;
                     flex-direction: column;
@@ -165,10 +182,23 @@
                 }
 
                 .accordion-item-download {
-                    min-width: var(--button-min-width);
-                    padding: 0 var(--space-3);
-                    font-size: var(--body-font-size-xs);
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-sizing: border-box;
+                    min-width: 224px; /* 1:1 portal: 224 × 56 */
+                    min-height: 56px;
+                    padding: 0 24px; /* 1:1 portal */
+                    font-size: 13px; /* 1:1 portal */
+                    line-height: 20px;
                     transition: background-color 0.33s, color 0.33s;
+
+                    .accordion-item-download-icon {
+                        flex: none;
+                        width: 24px; /* 1:1 portal: icon 24 × 24, 8px after the text */
+                        height: 24px;
+                        margin-left: 8px;
+                    }
 
                     @media (prefers-reduced-motion: reduce) {
                         transition: none;

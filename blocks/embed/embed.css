@@ -4,15 +4,31 @@
         padding: 0;
     }
 
+    /* ── inside an article body: 1:1 portal, the inline 640 × 360 YouTube player ── */
+    .default-content-wrapper + .embed-wrapper {
+        margin-block: 32px; /* 1:1 portal: paragraph margin around the player */
+
+        /* same column as the text around it (the article template pads it from 600px) */
+        @media (width < 600px) {
+            padding-inline: var(--space-2);
+        }
+    }
+
     .embed {
         position: relative;
         aspect-ratio: 16 / 9;
         overflow: hidden;
         background-color: var(--text-color);
 
-        @media (width >= 900px) {
+        @media (width >= 1024px) {
             aspect-ratio: auto;
-            height: 65vh; /* portal source: the media box drops 16:9 for 65vh on desktop, see contract §2 */
+            height: 65vh; /* 1:1 portal: the media box drops 16:9 for 65vh from 1024px */
+        }
+
+        .default-content-wrapper + .embed-wrapper > & {
+            width: min(640px, 100%); /* 1:1 portal */
+            height: 360px; /* 1:1 portal */
+            aspect-ratio: auto;
         }
 
         .embed-media {
@@ -80,15 +96,20 @@
             p {
                 margin: 0;
                 font-family: var(--heading-font-family);
-                font-size: var(--body-font-size-s);
+                font-size: 15px; /* 1:1 portal */
                 font-weight: var(--font-weight-heavy);
-                line-height: calc(22 / 15);
-                text-transform: var(--heading-text-transform);
+                line-height: 22px;
+                text-transform: uppercase;
                 overflow-wrap: break-word;
 
-                @media (width >= 600px) {
-                    font-size: var(--body-font-size-l);
-                    line-height: calc(34 / 28);
+                @media (width >= 768px) {
+                    font-size: 28px; /* 1:1 portal */
+                    line-height: 34px;
+                }
+
+                @media (width >= 1542px) {
+                    font-size: 30px; /* 1:1 portal: title step from 1542px */
+                    line-height: 38px;
                 }
             }
         }
