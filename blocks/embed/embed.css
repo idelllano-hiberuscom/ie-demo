@@ -1,0 +1,168 @@
+.embed-container {
+    .embed-wrapper {
+        max-width: unset;
+        padding: 0;
+    }
+
+    .embed {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background-color: var(--text-color);
+
+        @media (width >= 900px) {
+            aspect-ratio: auto;
+            height: 65vh; /* portal source: the media box drops 16:9 for 65vh on desktop, see contract §2 */
+        }
+
+        .embed-media {
+            position: absolute;
+            inset: 0;
+
+            > div {
+                height: 100%;
+            }
+
+            .embed-placeholder {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                border: 0;
+                background: none;
+                color: var(--text-on-dark);
+                cursor: pointer;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    background-color: var(--text-color);
+                    opacity: 0.25; /* veil measured on the portal (rgb(0 0 0 / 25%)), see contract §4 */
+                }
+
+                &:focus-visible {
+                    outline: var(--space-1) solid var(--text-on-dark);
+                    outline-offset: calc(-1 * var(--space-1));
+                }
+
+                picture {
+                    position: absolute;
+                    inset: 0;
+                }
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .embed-play {
+                    position: relative;
+                    z-index: 1;
+                    width: var(--space-8);
+                    height: var(--space-8);
+                }
+            }
+        }
+
+        .embed-title {
+            position: absolute;
+            inset: auto 0 0;
+            padding: var(--space-4);
+            color: var(--background-subtle);
+            pointer-events: none;
+
+            p {
+                margin: 0;
+                font-family: var(--heading-font-family);
+                font-size: var(--body-font-size-s);
+                font-weight: var(--font-weight-heavy);
+                line-height: calc(22 / 15);
+                text-transform: var(--heading-text-transform);
+                overflow-wrap: break-word;
+
+                @media (width >= 600px) {
+                    font-size: var(--body-font-size-l);
+                    line-height: calc(34 / 28);
+                }
+            }
+        }
+
+        .embed-modal {
+            box-sizing: border-box;
+            inset: 0;
+            width: 100%;
+            max-width: none; /* dialog:modal (UA) caps it at 100% - 2em - 6px; only applies while open */
+            height: 100%;
+            max-height: none; /* same UA cap on the height */
+            margin: 0;
+            padding: var(--space-8) var(--space-2);
+            border: 0;
+            background-color: color-mix(in srgb, var(--text-color) 80%, transparent); /* modal veil measured on the portal (global-tokens.md, «No consolidado») */
+            color: var(--text-on-dark);
+            overscroll-behavior: contain;
+
+            @media (prefers-reduced-motion: no-preference) {
+                transition: opacity 0.2s ease;
+            }
+
+            &[open] {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 1;
+
+                @starting-style {
+                    opacity: 0;
+                }
+            }
+
+            &::backdrop {
+                background: none;
+            }
+
+            .embed-modal-close {
+                position: absolute;
+                inset-block-start: var(--space-1);
+                inset-inline-end: var(--space-1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: var(--space-6);
+                height: var(--space-6);
+                padding: 0;
+                border: 0;
+                background: none;
+                color: inherit;
+                cursor: pointer;
+
+                &:focus-visible {
+                    outline: var(--border-width) solid var(--text-on-dark);
+                }
+
+                svg {
+                    width: var(--space-3);
+                    height: var(--space-3);
+                }
+            }
+
+            .embed-modal-frame {
+                width: min(100%, var(--content-max-width), (100dvh - 2 * var(--space-8)) * 16 / 9);
+                aspect-ratio: 16 / 9;
+                background-color: var(--text-color);
+
+                iframe {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    border: 0;
+                }
+            }
+        }
+    }
+}
