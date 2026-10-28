@@ -28,6 +28,7 @@
                     text-decoration: none;
 
                     &:hover {
+                        color: var(--link-hover-color);
                         text-decoration: underline;
                     }
                 }
@@ -106,6 +107,10 @@
 
         a:any-link {
             color: inherit;
+
+            &:hover {
+                color: var(--link-hover-color);
+            }
         }
     }
 

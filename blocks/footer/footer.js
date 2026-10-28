@@ -19,9 +19,8 @@
  * - A missing fragment leaves the footer empty instead of throwing.
  */
 
-// Note [EDS-COMP-004]: the portal's hover colour (#809FB7) and focus outline (#EB7974) need new
-// global tokens; they are pending the Gate 1 reopening at the end of this batch (orchestrator
-// decision) and are not implemented here. Meanwhile focus keeps the browser's visible indicator.
+// Note [EDS-COMP-004, EDS-FIX-002]: the portal's hover (--link-hover-color-on-dark) is in
+// footer.css and its focus ring (--focus-ring-width/-color) is the global one of styles.css.
 
 import { getMetadata } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';

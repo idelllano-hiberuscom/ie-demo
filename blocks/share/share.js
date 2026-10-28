@@ -18,8 +18,8 @@
  * - Fallback data-aue-* only when AEM has not instrumented the block; never overwrites. One
  *   resource per block, also for blocks decorated inside a fragment before it is attached.
  * - Icons decode asynchronously (none of them is the LCP).
- * - Compact bar: no hover with the colour of each network yet. It needs new colour tokens and
- *   goes back to Gate 1 (orchestrator decision); the default and focus states are final.
+ * - Compact bar: on hover the circle takes the colour of its network (--color-<network>) and
+ *   the icon turns white (EDS-FIX-002); focus is the global ring of styles.css.
  *
  * DOM de entrada (matriz EDS, contrato §3b):
  *   div.share[.compact]          (simple; classes → CSS class of the block, not a cell)
