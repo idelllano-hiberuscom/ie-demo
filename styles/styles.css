@@ -83,7 +83,9 @@
     --link-hover-color: #1d3ecf;
     --heading-font-size-m: 27px;
     --heading-font-size-xs: 22px;
-    --nav-height: 64px;
+
+    /* EDS-COMP-003: header height reserved before the header loads (no CLS); 96px from 600px, 187px from 900px */
+    --nav-height: 80px;
 }
 
 /* fallback fonts: metrics computed from the woff2 files in /fonts against Arial */
@@ -121,6 +123,9 @@
 
         /* section rhythm (desktop) */
         --section-padding: var(--space-6);
+
+        /* EDS-COMP-003: header bar on tablet */
+        --nav-height: 96px;
     }
 }
 
@@ -129,6 +134,9 @@
         /* boilerplate legacy (unchanged) */
         --heading-font-size-m: 22px;
         --heading-font-size-xs: 18px;
+
+        /* EDS-COMP-003: top bar (56px) + main bar (131px) */
+        --nav-height: 187px;
     }
 }
 
@@ -149,6 +157,17 @@ body.appear {
 
 header {
     height: var(--nav-height);
+}
+
+/* EDS-COMP-003: over a first-section hero the header overlays it; only the desktop top bar keeps its place */
+body:has(main > .section:first-child .hero) header {
+    height: 0;
+}
+
+@media (width >= 900px) {
+    body:has(main > .section:first-child .hero) header {
+        height: calc(var(--space-6) + var(--space-1));
+    }
 }
 
 header .header,
